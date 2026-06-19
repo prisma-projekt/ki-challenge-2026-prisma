@@ -1,0 +1,1 @@
+# ki-challenge-2026-prisma
