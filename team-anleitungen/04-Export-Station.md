@@ -1,127 +1,198 @@
-# PRISMA — Deine Anleitung: Export Station 📦
+# PRISMA — Anleitung: Export Station 📦
 
-**Dein Branch:** `feature/export-system`
-**Deine Dateien:** `src/js/modules/export-system.js` und `src/css/05-components/export-panel.css`
-
-**Besonderheit bei dir:** Anders als die anderen 5 hast du KEINE eigene Karte in `index.html` — es gibt kein `<article id="tool-export">`. Deine Funktionen (Copy-Button, Download, Share-Link) werden später in die ANDEREN 5 Tool-Karten eingebaut (z. B. ein "CSS kopieren"-Button bei der Color Engine, der deine Funktion aufruft). Das übernimmt der Gruppenleiter beim finalen Zusammenführen — du musst heute NICHT in `index.html`. Zum Testen deiner Funktionen reicht ein kleiner, temporärer Test-Button irgendwo auf deiner Seite oder ein Test direkt in der Browser-Konsole (`F12` → Console).
+**Dein Branch:** `feature/export-system`  
+**Deine Dateien:** `src/js/modules/export-system.js`, `src/css/05-components/export-panel.css`
 
 ---
 
-## 1. Die 4 wichtigsten Regeln (musst du nicht auswendig können, nur verstehen)
+## 1. Die 4 Grundregeln (nur verstehen, nicht auswendig lernen)
 
-1. **Jede CSS-Klasse fängt mit `challenge-` an** (z. B. `.challenge-export-panel__button`) — nie `.card`, `.button` o.ä. Grund: Ein zweites Team baut parallel mit, sonst überschreiben sich die Styles.
-2. **Keine IDs für Styling** — IDs nur, wenn JS gezielt ein Element ansteuern muss.
-3. **Sichtbare Texte NIE fest in den Code schreiben**, sondern über `data-i18n="..."` — die Seite muss Deutsch UND Englisch können.
-4. **Erst fürs Handy stylen, dann für Desktop** (`@media (min-width: 768px)`), und jeder Button braucht ein `aria-label`.
+1. **Jede CSS-Klasse beginnt mit `challenge-`** (z. B. `.challenge-export-panel__download-btn`) — nie `.card`, `.btn`. Ein zweites Team baut parallel, sonst ueberschreiben sich die Styles.
+2. **IDs nur als JS-Hook**, nie zum Stylen.
+3. **Sichtbare Texte nie hart reinschreiben** — ueber `data-i18n`, damit Deutsch UND Englisch geht. Neue Text-Keys sagst du dem **Gruppenleiter** (er pflegt `de.js`/`en.js`).
+4. **Erst Handy, dann Desktop** (`@media (min-width: 768px)`), und jeder Button braucht `aria-label`.
 
-Der KI-Prompt unten baut diese Regeln automatisch ein — du musst sie nicht selbst tippen.
+Der KI-Prompt weiter unten baut diese Regeln automatisch ein.
 
----
+## 2. WICHTIG: Dein Tool funktioniert schon! 🎉
 
-## 2. Los geht's — Schritt für Schritt
+Gestern wurde alles integriert. **Dein Modul ist bereits eingebaut und laeuft.** Deine Funktionen sind in `main.js` schon eingehaengt (Copy/Export). Es gibt (noch) keine sichtbare Export-Karte.
 
-### Schritt 0 (nur falls noch nicht gemacht): Deinen GitHub-Token erstellen
-1. Auf github.com einloggen (mit deinem Account)
-2. Profilbild oben rechts → **Settings**
-3. Ganz unten links → **Developer settings**
-4. **Personal access tokens** → **Tokens (classic)**
-5. **Generate new token** → **Generate new token (classic)**
-6. Note: `ki-challenge`, Expiration: `7 days`, Häkchen bei `repo`
-7. **Generate token** → den grünen Code SOFORT kopieren und sichern (Notizen-App o. ä.) — wird nur einmal angezeigt!
+Deine Aufgabe heute ist **nicht** „von null bauen", sondern:
+- **Design verbessern** (es sieht aktuell noch schlicht aus),
+- **Bugs ausbuegeln**, falls du welche findest,
+- **die Bonus-Features** (unten) ergaenzen, wenn Zeit ist.
 
-### Schritt 1: Projekt klonen
-Terminal öffnen, dann (ersetze `USERNAME` durch deinen GitHub-Namen und `TOKEN` durch deinen Code):
+Deshalb gibst du der KI **immer zuerst die aktuelle Datei** und laesst sie *verbessern* — nicht neu erfinden. (Wie genau: Abschnitt 5.)
+
+## 3. Git — Schritt fuer Schritt (fuer Anfaenger, nichts kann kaputtgehen)
+
+> Merksatz: **`push` = hochladen, `pull` = runterladen.** Es gibt EIN Repo in der Cloud, jeder hat lokal eine Kopie. Chaos entsteht nur, wenn mehrere in denselben Branch pushen. Loesung: **jeder in seinem eigenen Branch.**
+
+### 3.0 GitHub-Login vorbereiten (einmal pro Rechner)
+Wenn dich Git spaeter beim `push` nach Login fragt: im Browser mit deinem GitHub-Konto bestaetigen. Alternativ ein **Personal Access Token** erstellen: github.com → Profilbild → **Settings** → ganz unten **Developer settings** → **Personal access tokens → Tokens (classic)** → **Generate new token (classic)** → Note `ki-challenge`, Expiration `7 days`, Haken bei **repo** → **Generate** → Code **sofort kopieren** (wird nur einmal gezeigt).
+
+### 3.1 Frisch klonen (heute Morgen, EINMAL)
+Alten Projektordner loeschen/umbenennen, dann:
 ```powershell
-git clone https://USERNAME:TOKEN@github.com/prisma-projekt/ki-challenge-2026-prisma.git
+git clone https://github.com/prisma-projekt/ki-challenge-2026-prisma.git
 cd ki-challenge-2026-prisma
-```
-
-### Schritt 2: Auf deinen Branch wechseln
-```powershell
-git checkout feature/export-system
-```
-
-### Schritt 3: Projekt öffnen und Server starten
-```powershell
-code .
-```
-Im sich öffnenden VS Code: Menü **Terminal → New Terminal**, dann:
-```powershell
 npm install
 npm run dev
 ```
-Warte auf „VITE ready", dann im Browser öffnen:
+(Falls Git-Login: mit Token so klonen — `git clone https://DEIN-NAME:DEIN-TOKEN@github.com/prisma-projekt/ki-challenge-2026-prisma.git`)
+
+Warte auf **„VITE ready"**, dann im Browser: `http://localhost:5173/pages/index.html` — **Terminal offen lassen!**
+
+### 3.2 Deinen eigenen Branch anlegen (EINMAL)
+```powershell
+git checkout -b feature/export-system
 ```
-http://localhost:5173/pages/index.html
-```
-**Lass dieses Terminal-Fenster die ganze Zeit offen!**
+Sagt Git „already exists"? Dann nur: `git checkout feature/export-system`
 
-### Schritt 4: Deine Datei finden
-Links im Dateibaum: `src` → `js` → `modules` → **`export-system.js`** öffnen (und `src/css/05-components/export-panel.css` für dein Styling).
-
----
-
-## 3. Dein KI-Prompt
-
-Kopiere **zuerst** diesen Block in deine KI (egal welche):
-
-```markdown
-Ich arbeite am Projekt PRISMA für die KI Challenge 2026 der HTL Traun (Klasse 2BHIT) mit dieser Architektur:
-- Build-Tool: Vite 6, Vanilla ES6 Module (import/export), 0 Inline-Scripts im HTML
-- CSS: ITCSS mit @layer (settings, generic, elements, components, utilities, modes)
-- Naming: BEM, ALLE Klassen mit .challenge-* Prefix — keine generischen Klassen wie .card/.button
-- Keine IDs für Styling, nur für JS-Hooks
-- i18n: data-i18n Attribute, Key-Schema feature.subfeature.element, de.js und en.js müssen synchron sein
-- Mobile-First: Basis-Styles für Mobile, @media(min-width) ab 768px für Desktop
-- Semantisches HTML5 + ARIA-Labels auf allen interaktiven Elementen
-- Alle Farben/Abstände über CSS-Variablen aus tokens.css (z.B. var(--challenge-primary), var(--space-4))
-Bitte halte dich strikt an diese Regeln, auch wenn ich es in der konkreten Anfrage nicht jedes Mal wiederhole.
-```
-
-**Danach direkt im selben Chat** diesen Block:
-
-```markdown
-Erstelle mir die "Export Station" als ES6-Modul in der Datei `js/modules/export-system.js`.
-
-PFLICHT:
-1. copyToClipboard(text): navigator.clipboard.writeText() mit execCommand-Fallback, gibt true/false zurück.
-2. combineCss({colorCss, typeCss, layoutCss}): kommentierter CSS-Block mit Abschnitten.
-3. showFeedback(message, type='success'): Toast mit Icon, verschwindet nach 3s, role="status".
-4. initExportButtons(): Click-Listener auf alle Export-Buttons, kopiert passenden CSS-Block, zeigt Feedback.
-
-BONUS-ERWEITERUNG:
-5. downloadFile(content, filename, mimeType): erstellt einen Blob, triggert einen echten Datei-Download im Browser (funktioniert für .css UND .json).
-6. exportAsDesignTokensJson({colorPalette, fontPairing, layout}): baut ein strukturiertes JSON-Objekt (Design-Tokens-Format, z.B. {colors: {...}, typography: {...}, layout: {...}}) und bietet es über downloadFile() als design-tokens.json zum Download an.
-7. buildShareableLink({colorPalette, fontPairing, layoutUseCase}): codiert den aktuellen Zustand kompakt in Base64 als URL-Query-Parameter (z.B. ?state=eyJjb2xvciI6...) und gibt die vollständige URL zurück. Ergänze eine parseShareableLink()-Funktion, die beim Laden der Seite prüft, ob ein ?state=-Parameter vorhanden ist, und falls ja, automatisch die entsprechende Palette/Font/Layout wieder herstellt.
-
-Architektur-Vorgaben:
-- BEM: .challenge-export-panel__download-btn, .challenge-export-panel__share-btn, .challenge-export-panel__share-link (Anzeige des generierten Links, selbst kopierbar).
-- Buttons brauchen aria-label, Toast-Texte über data-i18n (export.feedback.success / export.feedback.error / export.feedback.linkCopied).
-- downloadFile() darf keine Inline-Scripts erzeugen — reines DOM-Element (<a>) programmatisch erstellen und wieder entfernen.
-
-Gib mir zuerst PFLICHT vollständig, danach BONUS-ERWEITERUNG separat.
-```
-
-Den zurückgegebenen Code in deine zwei Dateien einfügen, speichern (`Strg+S`), im Browser prüfen.
-
----
-
-## 4. Speichern & Hochladen (alle 20–30 Minuten wiederholen!)
-
+### 3.3 Arbeiten → speichern → hochladen (alle 20–30 Min wiederholen!)
 ```powershell
 git add .
-git commit -m "kurze Beschreibung was du gemacht hast"
-git push
+git commit -m "kurz was du gemacht hast"
+git push -u origin feature/export-system
+```
+Das `-u origin feature/export-system` brauchst du **nur beim allerersten Mal**. Danach reicht `git push`.
+
+### 3.4 Am Ende: Pull Request stellen
+Nach `git push` zeigt GitHub oben gelb **„Compare & pull request"** → anklicken → pruefen `base: main` ← `compare: feature/export-system` → **„Create pull request"**. **Fertig fuer dich.** Du mergst NICHT selbst — das macht der Gruppenleiter.
+
+### 3.5 Spaeter weiterarbeiten (Resync — damit du die Sachen der anderen bekommst)
+```powershell
+git checkout main
+git pull
+git checkout feature/export-system
+git merge main
+```
+Dann normal weiterarbeiten.
+
+## 4. Dein Bereich — was du anfassen darfst
+
+**DARFST du bearbeiten:**
+- `src/js/modules/export-system.js`
+- `src/css/05-components/export-panel.css`
+- **Kein eigener HTML-Block:** Anders als die anderen hast du keine Karte in `index.html`. Deine Funktionen werden ueber `main.js` in die anderen Tools eingehaengt. Zum Testen: temporaerer Button oder F12-Konsole.
+
+**NIEMALS anfassen** (gehoeren dem Gruppenleiter): `main.js`, `tokens.css`, `de.js`, `en.js`, und fremde `<article>`-Bloecke.
+
+**Goldene Regel:** Fass `index.html` gar nicht an. Wenn du eine sichtbare Export-Karte willst, sag dem Gruppenleiter Bescheid — er baut sie ein.
+
+### ⚠️ Diese Funktionsnamen NICHT umbenennen
+`main.js` ruft deine Funktionen ueber genau diese Namen auf. Benennst du sie um, ist dein Tool auf einmal „tot":
+> `copyToClipboard`, `combineCss`, `showFeedback`, `registerCssSource`, `initExportButtons`
+
+Deine JS-Hooks (existieren schon im HTML — die KI muss GENAU diese Namen ansteuern):
+  - In `main.js` sind schon registriert: `registerCssSource('colors'|'typography'|'layout', …)` und `initExportButtons()`.
+  - Die anderen Module liefern ihr CSS ueber `getCurrentCss()` — du bekommst es ueber `getCssFor('colors')` etc. bereits.
+
+## 5. So kriegst du GUTEN Code aus der KI (Anti-Muell-Technik)
+
+Das ist der wichtigste Abschnitt. Halte dich dran, dann spuckt die KI keinen Dreck aus:
+
+1. **Kontext zuerst.** Schick als ALLERERSTES den Kontext-Block aus Abschnitt 6.1. Warte auf „verstanden".
+2. **Aktuelle Datei mitgeben.** Oeffne deine `export-system.js` in VS Code, markiere alles (`Strg+A`), kopiere es, und schreib der KI: *„Hier ist die AKTUELLE Datei. Verbessere sie, erfinde nichts Neues, behalte alle Funktionsnamen:"* + einfuegen. So baut die KI auf dem Echten auf statt sich was auszudenken.
+3. **Ganze Datei zurueckverlangen.** *„Gib mir die KOMPLETTE Datei zurueck, nicht nur Ausschnitte."* — dann musst du nichts zusammenpuzzeln.
+4. **Funktionsnamen schuetzen.** Schreib dazu: *„Diese Namen duerfen NICHT umbenannt werden: `copyToClipboard`, `combineCss`, `showFeedback`, `registerCssSource`, `initExportButtons`."*
+5. **Eine Sache pro Runde.** Erst Design, testen. Dann ein Bonus, testen. Nicht 5 Dinge auf einmal.
+6. **Nach JEDER Aenderung testen:** speichern (`Strg+S`) → Browser aktualisiert automatisch → anklicken → **F12 → Console** auf rote Fehler pruefen.
+7. **Fehler zurueck an die KI.** Rote Meldung? Exakt kopieren und der KI geben: *„Ich bekomme diesen Fehler: … Bitte fixe nur das."*
+8. **Token-Check.** Drueck in der Antwort `Strg+F` und such nach `#` — findest du feste Farben wie `#3B82F6` oder `background: white`, sag: *„Ersetze alle festen Farben durch die passenden --challenge-/--bg-/--text-Variablen."*
+9. **Nichts anderes anfassen.** *„Aendere NUR export-system.js und export-panel.css. Fass keine anderen Dateien an."*
+
+**Merksatz:** Kontext geben → aktuelle Datei geben → ganze Datei zurueck → testen → Fehler zurueckgeben. Wiederholen.
+
+## 6. Deine fertigen KI-Prompts (copy-paste)
+
+### 6.1 Kontext (immer zuerst, EINMAL pro Chat)
+```markdown
+Ich arbeite am Projekt PRISMA fuer die KI Challenge 2026 der HTL Traun (Klasse 2BHIT).
+Es ist ein bestehendes, LAUFENDES Projekt. Halte dich strikt an diese Architektur:
+
+- Build: Vite 6, Vanilla ES6 Module (import/export), KEINE Inline-Scripts im HTML.
+- CSS: ITCSS mit @layer (settings, generic, elements, components, utilities, modes).
+  Meine Komponente liegt in @layer components.
+- Naming: BEM, ALLE Klassen mit .challenge-* Prefix. Keine generischen Klassen wie .card/.button.
+- Keine IDs fuer Styling (IDs nur als JS-Hook).
+- i18n: sichtbare Texte ueber data-i18n; Keys pflegt der Gruppenleiter in de.js/en.js.
+- Mobile-First: Basis-Styles fuers Handy, Desktop ab @media (min-width: 768px).
+- Semantisches HTML5 + aria-label auf ALLEN interaktiven Elementen.
+
+WICHTIG — benutze GENAU diese CSS-Variablen aus tokens.css (erfinde KEINE eigenen!):
+  Marke:    --challenge-primary (#4F46E5), --challenge-primary-light, --challenge-primary-dark,
+            --challenge-accent (#06B6D4), --challenge-success, --challenge-warning, --challenge-error
+  Flaechen: --bg-body, --bg-surface, --bg-surface-elevated, --bg-code
+  Text:     --text-primary, --text-secondary, --text-muted, --text-inverse
+  Rahmen:   --border-color, --border-color-strong
+  Schrift:  --font-sans (Inter), --font-display (Poppins), --font-mono (JetBrains Mono);
+            Groessen --text-xs bis --text-5xl
+  Abstand:  --space-1 bis --space-24 (8px-Raster)
+  Radius:   --radius-sm, --radius-md, --radius-lg, --radius-xl, --radius-full
+  Schatten: --shadow-sm bis --shadow-xl, --shadow-glow (unser Signature-Hover!), --shadow-glow-accent
+
+DARK MODE: laeuft automatisch ueber html.dark-mode. NIEMALS body[data-mode] benutzen.
+Wenn du fuer Flaechen/Text/Rahmen die semantischen Variablen oben nimmst
+(--bg-surface, --text-primary, --border-color ...), funktioniert Dark Mode voellig von allein.
+
+SIGNATURE-STYLE: Beim :hover interaktiver Karten/Buttons setze zusaetzlich
+  box-shadow: var(--shadow-glow);
+Das ist das einheitliche Erkennungsmerkmal aller PRISMA-Tools.
+
+Bestaetige mit "verstanden" und WARTE auf meine naechste Nachricht.
 ```
 
----
+### 6.2 Aufgabe (danach, im selben Chat — davor deine aktuelle Datei einfuegen, siehe Abschnitt 5.2)
+```markdown
+Meine Export Station (export-system.js) LAEUFT in der Basis (copyToClipboard mit
+Fallback, combineCss, showFeedback, registerCssSource, initExportButtons). Ich will die
+BONUS-Teile ergaenzen. (Aktuelle Datei kommt gleich.)
 
-## 5. Wenn's klemmt
+BONUS 1 — Datei-Download:
+- downloadFile(content, filename, mimeType): erstellt einen Blob, haengt kurz ein <a>-Element
+  an, klickt es, entfernt es wieder, gibt die Object-URL frei. Funktioniert fuer .css und .json.
+- initDownloadButtons(): haengt an .challenge-export-panel__download-btn[data-export-format]
+  (css|json). css = combineCss(...); json = Design-Tokens-Objekt
+  {colors:{...}, typography:{...}, layout:{...}} aus den CSS-Variablen der Engines.
 
-| Problem | Lösung |
+BONUS 2 — Teilbarer Link:
+- buildShareableLink(state): kodiert den Zustand kompakt als Base64 im URL-Hash (#design=...),
+  gibt die volle URL zurueck. parseShareableLink(): liest beim Laden #design= und gibt das
+  Objekt zurueck (Anwenden uebernimmt spaeter der Gruppenleiter).
+- initShareButton(): .challenge-export-panel__share-btn → Link erzeugen, in
+  .challenge-export-panel__share-link anzeigen (selbst kopierbar) + in Zwischenablage.
+
+REGELN:
+- Basis-Funktionsnamen unveraendert: copyToClipboard, combineCss, showFeedback,
+  registerCssSource, initExportButtons.
+- Buttons brauchen aria-label; Toast-Texte ueber data-i18n
+  (export.feedback.success / .error / .linkCopied / .downloaded).
+- Kein Inline-Script; <a> nur programmatisch erstellen & entfernen.
+- Gib mir die KOMPLETTE export-system.js zurueck, danach die komplette export-panel.css.
+- Aendere NUR diese Dateien. (Wenn eine sichtbare Export-Karte noetig ist, sag ich dem
+  Gruppenleiter Bescheid — du fasst index.html NICHT an.)
+```
+
+## 7. Fertig? Schnell-Check vor dem Push
+- [ ] combineCss liefert einen sauberen, kommentierten CSS-Block
+- [ ] showFeedback zeigt einen Toast (3s, role=status), Erfolg/Fehler farblich getrennt
+- [ ] downloadFile loest einen echten Datei-Download aus (.css und .json)
+- [ ] `F12 → Console` zeigt KEINE roten Fehler
+- [ ] Auf dem Handy-Format getestet (im Browser `F12` → Toggle-Device-Toolbar)
+- [ ] Dark Mode getestet (Mond-Icon oben) — nichts wird unlesbar
+
+## 8. Wenn's klemmt
+
+| Problem | Loesung |
 |---|---|
-| "Authentication failed" beim Klonen | Token nochmal frisch kopieren, evtl. Leerzeichen mitkopiert |
-| "Repository not found" | Du wurdest noch nicht als Collaborator akzeptiert → beim Gruppenleiter melden |
-| `npm run dev` Fehler | Bist du im richtigen Ordner? `cd ki-challenge-2026-prisma` nicht vergessen |
-| Browser zeigt "connection refused" | Terminal-Fenster geschlossen/PC im Standby → `npm run dev` neu eingeben |
-| Sonst irgendwas unklar | Einfach den Gruppenleiter fragen — lieber einmal zu oft als stecken bleiben |
+| „Authentication failed" | Token frisch kopieren (keine Leerzeichen), oder Browser-Login bestaetigen |
+| „Repository not found" | Du bist noch nicht als Collaborator akzeptiert → Gruppenleiter |
+| `npm run dev` meckert | Im richtigen Ordner? `cd ki-challenge-2026-prisma` |
+| „connection refused" im Browser | Terminal zu / PC im Standby → `npm run dev` neu starten |
+| Text zeigt roh den Key (z. B. `promptParser.copy`) | i18n-Key fehlt → Gruppenleiter soll ihn in `de.js`/`en.js` ergaenzen |
+| Mein Tool tut nichts mehr | Hast du eine Funktion umbenannt? Namen aus Abschnitt 4 wiederherstellen |
+| Farben sehen „falsch" aus / kein Dark Mode | Feste Farben (`#…`, `white`) durch Tokens ersetzen (Abschnitt 5.8) |
+| Merge-Konflikt (rote `<<<<<<<`) | `git merge --abort` → nichts kaputt → Gruppenleiter fragen |
+| Total verirrt | Lieber einmal zu oft fragen als eine Stunde festhaengen 💪 |
