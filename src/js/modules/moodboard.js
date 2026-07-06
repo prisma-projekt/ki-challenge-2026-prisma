@@ -1,107 +1,261 @@
 /**
  * PRISMA — Moodboard
- * Drag & Drop Moodboard für Inspirations-Sammlung
+ * Drag & Drop Inspirations-Board mit localStorage-Persistenz.
  *
- * TODO: Implementiere das Moodboard
- * Anforderungen:
- * 1. Grid von Platzhalter-Items (Bilder, Farben, Texte)
- * 2. Drag & Drop mit HTML5 Drag and Drop API
- * 3. Items können neu angeordnet werden
- * 4. Items können gelöscht werden
- * 5. State wird im localStorage gespeichert
- * 6. Items können per URL/Image-Upload hinzugefügt werden
+ * Öffentliche API:
+ *   initMoodboard(selector)   -> baut das Board auf
+ *   addItem({ type, content }) -> fügt Item hinzu
+ *   removeItem(itemId)         -> entfernt Item
  *
- * KI-Prompt-Tipp:
- * "Erstelle ein Moodboard mit HTML5 Drag & Drop API.
- *  Items sollen neu angeordnet werden können.
- *  Speichere die Reihenfolge in localStorage.
- *  Füge einen Button zum Hinzufügen neuer Items hinzu."
+ * Item-Typen: 'color' (#hex), 'text' (String), 'image' (URL)
  */
 
 const STORAGE_KEY = 'prisma-moodboard';
 
-/**
- * Standard-Items für das Moodboard
- * @type {Array<{id: string, type: string, content: string}>}
- */
+/** @type {Array<{id: string, type: string, content: string}>} */
 const DEFAULT_ITEMS = [
-  // TODO: Füge 6–8 Standard-Items hinzu
-  // Beispiel:
-  // { id: '1', type: 'color', content: '#4F46E5' },
-  // { id: '2', type: 'image', content: '/tutorials/ki-challenge-2026/projects/prisma/assets/images/moodboard-1.jpg' },
-  // { id: '3', type: 'text', content: 'Minimal & Clean' },
+  { id: 'seed-1', type: 'color', content: '#4F46E5' },
+  { id: 'seed-2', type: 'color', content: '#06B6D4' },
+  { id: 'seed-3', type: 'text', content: 'Minimal & Clean' },
+  { id: 'seed-4', type: 'color', content: '#F9FAFB' },
+  { id: 'seed-5', type: 'text', content: 'Viel Weißraum' },
+  { id: 'seed-6', type: 'color', content: '#1F2937' },
 ];
 
-/**
- * Initialisiert das Moodboard
- * @param {string} containerSelector - Selector für den Container
- */
-export function initMoodboard(containerSelector = '#moodboard-grid') {
-  // TODO: Implementiere Initialisierung
-  // 1. Lade gespeicherte Items aus localStorage
-  // 2. Falls keine vorhanden: Nutze DEFAULT_ITEMS
-  // 3. Rendere alle Items
-  // 4. Initialisiere Drag & Drop
+let items = [];
+let boardSelector = '#moodboard-grid';
+let draggedId = null;
 
-  console.log('[TODO] initMoodboard() muss implementiert werden');
+/* -------------------------
+   Persistenz
+--------------------------*/
+
+function loadOrder() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [...DEFAULT_ITEMS];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) && parsed.length ? parsed : [...DEFAULT_ITEMS];
+  } catch (error) {
+    console.error('[Moodboard] localStorage konnte nicht gelesen werden:', error);
+    return [...DEFAULT_ITEMS];
+  }
 }
 
-/**
- * Rendert alle Moodboard-Items
- * @param {Array} items - Array von Item-Objekten
- * @param {string} containerSelector - Selector für den Container
- */
-function renderItems(items, containerSelector) {
-  // TODO: Implementiere Item-Rendering
-  // Erstelle für jedes Item:
-  // - Farbe: Farbiges Rechteck
-  // - Bild: <img> Tag
-  // - Text: Styled Text-Block
-  // Alle Items sind draggable
+function saveOrder(currentItems) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(currentItems));
+  } catch (error) {
+    console.error('[Moodboard] localStorage konnte nicht geschrieben werden:', error);
+  }
 }
 
+function generateId() {
+  return `item-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+}
+
+/* -------------------------
+   Rendering
+--------------------------*/
+
+function buildItemBody(item) {
+  if (item.type === 'color') {
+    const swatch = document.createElement('div');
+    swatch.className = 'challenge-moodboard__color';
+    swatch.style.backgroundColor = item.content;
+    const code = document.createElement('span');
+    code.className = 'challenge-moodboard__color-code';
+    code.textContent = item.content;
+    swatch.appendChild(code);
+    return swatch;
+  }
+
+  if (item.type === 'image') {
+    const img = document.createElement('img');
+    img.className = 'challenge-moodboard__image';
+    img.src = item.content;
+    img.alt = 'Moodboard-Bild';
+    img.loading = 'lazy';
+    return img;
+  }
+
+  const text = document.createElement('p');
+  text.className = 'challenge-moodboard__text';
+  text.textContent = item.content;
+  return text;
+}
+
+function createItemElement(item) {
+  const el = document.createElement('figure');
+  el.className = 'challenge-moodboard__item';
+  el.draggable = true;
+  el.dataset.itemId = item.id;
+  el.setAttribute('aria-label', `Moodboard-Element (${item.type})`);
+
+  el.appendChild(buildItemBody(item));
+
+  // Steuerung: hoch / runter (Tastatur-Barrierefreiheit) + löschen
+  const controls = document.createElement('div');
+  controls.className = 'challenge-moodboard__controls';
+
+  const upBtn = document.createElement('button');
+  upBtn.type = 'button';
+  upBtn.className = 'challenge-moodboard__control';
+  upBtn.setAttribute('aria-label', 'Element nach vorne verschieben');
+  upBtn.textContent = '←';
+  upBtn.addEventListener('click', () => moveItem(item.id, -1));
+
+  const downBtn = document.createElement('button');
+  downBtn.type = 'button';
+  downBtn.className = 'challenge-moodboard__control';
+  downBtn.setAttribute('aria-label', 'Element nach hinten verschieben');
+  downBtn.textContent = '→';
+  downBtn.addEventListener('click', () => moveItem(item.id, 1));
+
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'challenge-moodboard__control challenge-moodboard__control--remove';
+  removeBtn.setAttribute('aria-label', 'Element entfernen');
+  removeBtn.textContent = '✕';
+  removeBtn.addEventListener('click', () => removeItem(item.id));
+
+  controls.append(upBtn, downBtn, removeBtn);
+  el.appendChild(controls);
+
+  attachDragHandlers(el);
+  return el;
+}
+
+function render() {
+  if (typeof document === 'undefined') return;
+  const container = document.querySelector(boardSelector);
+  if (!container) {
+    console.error('[Moodboard] Container nicht gefunden:', boardSelector);
+    return;
+  }
+
+  container.innerHTML = '';
+  items.forEach((item) => container.appendChild(createItemElement(item)));
+}
+
+/* -------------------------
+   Reihenfolge ändern
+--------------------------*/
+
+function moveItem(itemId, direction) {
+  const index = items.findIndex((i) => i.id === itemId);
+  const target = index + direction;
+  if (index === -1 || target < 0 || target >= items.length) return;
+
+  [items[index], items[target]] = [items[target], items[index]];
+  saveOrder(items);
+  render();
+}
+
+function reorderByDrop(sourceId, targetId) {
+  if (sourceId === targetId) return;
+  const from = items.findIndex((i) => i.id === sourceId);
+  const to = items.findIndex((i) => i.id === targetId);
+  if (from === -1 || to === -1) return;
+
+  const [moved] = items.splice(from, 1);
+  items.splice(to, 0, moved);
+  saveOrder(items);
+  render();
+}
+
+/* -------------------------
+   HTML5 Drag & Drop
+--------------------------*/
+
+function attachDragHandlers(el) {
+  el.addEventListener('dragstart', (event) => {
+    draggedId = el.dataset.itemId;
+    el.classList.add('challenge-moodboard__item--dragging');
+    event.dataTransfer.effectAllowed = 'move';
+    // Firefox braucht gesetzte Daten, sonst startet kein Drag
+    event.dataTransfer.setData('text/plain', draggedId);
+  });
+
+  el.addEventListener('dragover', (event) => {
+    event.preventDefault(); // erlaubt Drop
+    event.dataTransfer.dropEffect = 'move';
+    el.classList.add('challenge-moodboard__item--dropzone');
+  });
+
+  el.addEventListener('dragleave', () => {
+    el.classList.remove('challenge-moodboard__item--dropzone');
+  });
+
+  el.addEventListener('drop', (event) => {
+    event.preventDefault();
+    el.classList.remove('challenge-moodboard__item--dropzone');
+    const targetId = el.dataset.itemId;
+    if (draggedId) reorderByDrop(draggedId, targetId);
+  });
+
+  el.addEventListener('dragend', () => {
+    el.classList.remove('challenge-moodboard__item--dragging');
+    draggedId = null;
+  });
+}
+
+/* -------------------------
+   Öffentliche API
+--------------------------*/
+
 /**
- * Fügt ein neues Item zum Moodboard hinzu
- * @param {Object} item - {type, content}
+ * Fügt ein neues Item hinzu.
+ * @param {{type: string, content: string}} item
  */
 export function addItem(item) {
-  // TODO: Implementiere Hinzufügen
-  // 1. Generiere eindeutige ID
-  // 2. Füge zum Items-Array hinzu
-  // 3. Speichere in localStorage
-  // 4. Rendere neu
+  if (!item || !item.type || !item.content) {
+    console.warn('[Moodboard] addItem: type und content sind Pflicht.');
+    return;
+  }
+  items.push({ id: generateId(), type: item.type, content: item.content });
+  saveOrder(items);
+  render();
 }
 
 /**
- * Entfernt ein Item aus dem Moodboard
- * @param {string} itemId - ID des Items
+ * Entfernt ein Item anhand seiner ID.
+ * @param {string} itemId
  */
 export function removeItem(itemId) {
-  // TODO: Implementiere Entfernen
-  // 1. Filtere Item heraus
-  // 2. Speichere in localStorage
-  // 3. Rendere neu
+  items = items.filter((i) => i.id !== itemId);
+  saveOrder(items);
+  render();
 }
 
 /**
- * Speichert die aktuelle Reihenfolge im localStorage
- * @param {Array} items - Array von Items
+ * Initialisiert das Moodboard: lädt State, rendert, verdrahtet das Add-Formular.
+ * @param {string} [containerSelector='#moodboard-grid']
  */
-function saveOrder(items) {
-  // TODO: Implementiere Speicherung
-  // JSON.stringify(items) in localStorage
+export function initMoodboard(containerSelector = '#moodboard-grid') {
+  boardSelector = containerSelector;
+  items = loadOrder();
+  render();
+  wireAddForm();
 }
 
 /**
- * Lädt die gespeicherte Reihenfolge
- * @returns {Array}
+ * Verbindet ein optionales Add-Formular
+ * (.challenge-moodboard__add mit [data-moodboard-type] + [data-moodboard-content]).
  */
-function loadOrder() {
-  // TODO: Implementiere Laden
-  // JSON.parse(localStorage.getItem(STORAGE_KEY)) || DEFAULT_ITEMS
-}
+function wireAddForm() {
+  const form = document.querySelector('.challenge-moodboard__add');
+  if (!form) return;
 
-// TODO: Implementiere Drag & Drop Event-Handler
-// - dragstart, dragover, drop, dragend
-// - Aktualisiere die Reihenfolge nach dem Drop
-// - Speichere die neue Reihenfolge
+  const typeInput = form.querySelector('[data-moodboard-type]');
+  const contentInput = form.querySelector('[data-moodboard-content]');
+  const submitBtn = form.querySelector('[data-moodboard-submit]');
+  if (!contentInput || !submitBtn) return;
+
+  submitBtn.addEventListener('click', () => {
+    const content = contentInput.value.trim();
+    if (!content) return;
+    addItem({ type: typeInput ? typeInput.value : 'text', content });
+    contentInput.value = '';
+  });
+}

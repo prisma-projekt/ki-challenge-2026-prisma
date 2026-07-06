@@ -144,5 +144,13 @@ export default {
 
   // Footer
   'footer.credits': 'PRISMA — KI Challenge Team B',
-  'footer.evolutionLink': 'Evolution Showcase'
+  'footer.evolutionLink': 'Evolution Showcase',
+  // PRISMA — Tool-Keys
+  'typeMatcher.pairing.previewHeading': 'Schneller brauner Fuchs springt über den faulen Hund',
+  'typeMatcher.pairing.previewBody': 'Ein sauberer Beispielsatz zeigt, wie gut sich der Fließtext lesen lässt.',
+  'typeMatcher.pairing.previewArticle': 'Eine kurze Artikel-Vorschau zeigt das Zusammenspiel von Überschrift und Fließtext.',
+  'promptParser.before': 'Vorher',
+  'promptParser.after': 'Nachher',
+  'promptParser.copy': 'Kopieren',
+  'export.feedback.downloaded': 'Datei heruntergeladen!',
 };
