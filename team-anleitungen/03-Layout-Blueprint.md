@@ -1,7 +1,7 @@
 # PRISMA — Deine Anleitung: Layout Blueprint 📐
 
 **Dein Branch:** `feature/layout-engine`
-**Deine Dateien:** `src/js/modules/layout-engine.js` und `src/css/05-components/layout-blueprint.css`
+**Deine Dateien:** `src/js/modules/layout-engine.js` und `src/css/05-components/layout-blueprint.css` — sowie NUR dein eigener Block `<article id="tool-layout">...</article>` in `src/pages/index.html` (nichts davor/danach anfassen!)
 
 ---
 
@@ -59,12 +59,20 @@ Links im Dateibaum: `src` → `js` → `modules` → **`layout-engine.js`** öff
 
 ---
 
+## 2.5 Wichtig: Dein Bereich in `index.html`
+
+In `src/pages/index.html` gibt es schon eine Karte für dein Tool: `<article id="tool-layout">...</article>`. Darin steckt aktuell nur ein Platzhalter-Text (`<div class="tool-placeholder">`). Das ersetzt du gleich durch dein echtes Eingabefeld + Button + Ergebnis-Anzeige.
+
+**Goldene Regel:** Bearbeite NUR den Inhalt innerhalb von `<article id="tool-layout">...</article>`. Nichts davor, nichts danach — auch nicht bei anderen `<article id="tool-...">`-Blöcken, die gehören anderen Personen. Solange jeder nur in seinem eigenen Block bleibt, gibt es beim Zusammenführen keine Konflikte, auch wenn alle in derselben Datei arbeiten.
+
+---
+
 ## 3. Dein KI-Prompt
 
 Kopiere **zuerst** diesen Block in deine KI (egal welche):
 
 ```markdown
-Ich arbeite am Projekt PRISMA (KI Challenge 2026) mit dieser Architektur:
+Ich arbeite am Projekt PRISMA für die KI Challenge 2026 der HTL Traun (Klasse 2BHIT) mit dieser Architektur:
 - Build-Tool: Vite 6, Vanilla ES6 Module (import/export), 0 Inline-Scripts im HTML
 - CSS: ITCSS mit @layer (settings, generic, elements, components, utilities, modes)
 - Naming: BEM, ALLE Klassen mit .challenge-* Prefix — keine generischen Klassen wie .card/.button
@@ -98,9 +106,11 @@ Architektur-Vorgaben:
 - Preview-Container: role="img" mit aria-label, das die aktuelle Konfiguration beschreibt (z.B. "Grid mit 3 Spalten, 16px Abstand").
 
 Gib mir zuerst PFLICHT vollständig, danach BONUS-ERWEITERUNG separat.
+
+ZUSÄTZLICH: Gib mir auch das HTML-Snippet, das ich in `src/pages/index.html` INNERHALB von `<article id="tool-layout">` anstelle des aktuellen `<div class="tool-placeholder">...</div>` einfügen soll (Eingabefeld/Auswahl + Button + Ergebnis-Container mit passender BEM-Klasse).
 ```
 
-Den zurückgegebenen Code in deine zwei Dateien einfügen, speichern (`Strg+S`), im Browser prüfen.
+Den zurückgegebenen Code in deine zwei Dateien einfügen UND das HTML-Snippet in deinen `<article id="tool-layout">`-Block in `index.html` (Platzhalter-Div ersetzen), speichern (`Strg+S`), im Browser prüfen.
 
 ---
 

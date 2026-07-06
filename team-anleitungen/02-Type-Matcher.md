@@ -1,7 +1,7 @@
 # PRISMA — Deine Anleitung: Type Matcher ✍️
 
 **Dein Branch:** `feature/type-engine`
-**Deine Dateien:** `src/js/modules/type-engine.js` und `src/css/05-components/type-pairing.css`
+**Deine Dateien:** `src/js/modules/type-engine.js` und `src/css/05-components/type-pairing.css` — sowie NUR dein eigener Block `<article id="tool-type">...</article>` in `src/pages/index.html` (nichts davor/danach anfassen!)
 
 ---
 
@@ -59,12 +59,20 @@ Links im Dateibaum: `src` → `js` → `modules` → **`type-engine.js`** öffne
 
 ---
 
+## 2.5 Wichtig: Dein Bereich in `index.html`
+
+In `src/pages/index.html` gibt es schon eine Karte für dein Tool: `<article id="tool-type">...</article>`. Darin steckt aktuell nur ein Platzhalter-Text (`<div class="tool-placeholder">`). Das ersetzt du gleich durch dein echtes Eingabefeld + Button + Ergebnis-Anzeige.
+
+**Goldene Regel:** Bearbeite NUR den Inhalt innerhalb von `<article id="tool-type">...</article>`. Nichts davor, nichts danach — auch nicht bei anderen `<article id="tool-...">`-Blöcken, die gehören anderen Personen. Solange jeder nur in seinem eigenen Block bleibt, gibt es beim Zusammenführen keine Konflikte, auch wenn alle in derselben Datei arbeiten.
+
+---
+
 ## 3. Dein KI-Prompt
 
 Kopiere **zuerst** diesen Block in deine KI (egal welche):
 
 ```markdown
-Ich arbeite am Projekt PRISMA (KI Challenge 2026) mit dieser Architektur:
+Ich arbeite am Projekt PRISMA für die KI Challenge 2026 der HTL Traun (Klasse 2BHIT) mit dieser Architektur:
 - Build-Tool: Vite 6, Vanilla ES6 Module (import/export), 0 Inline-Scripts im HTML
 - CSS: ITCSS mit @layer (settings, generic, elements, components, utilities, modes)
 - Naming: BEM, ALLE Klassen mit .challenge-* Prefix — keine generischen Klassen wie .card/.button
@@ -99,9 +107,11 @@ Architektur-Vorgaben:
 - Preview-Texte über data-i18n, Key-Schema: typeMatcher.pairing.previewHeading / typeMatcher.pairing.previewBody / typeMatcher.pairing.previewArticle.
 
 Gib mir zuerst PFLICHT vollständig, danach BONUS-ERWEITERUNG separat.
+
+ZUSÄTZLICH: Gib mir auch das HTML-Snippet, das ich in `src/pages/index.html` INNERHALB von `<article id="tool-type">` anstelle des aktuellen `<div class="tool-placeholder">...</div>` einfügen soll (Eingabefeld/Auswahl + Button + Ergebnis-Container mit passender BEM-Klasse).
 ```
 
-Den zurückgegebenen Code in deine zwei Dateien einfügen, speichern (`Strg+S`), im Browser prüfen.
+Den zurückgegebenen Code in deine zwei Dateien einfügen UND das HTML-Snippet in deinen `<article id="tool-type">`-Block in `index.html` (Platzhalter-Div ersetzen), speichern (`Strg+S`), im Browser prüfen.
 
 ---
 

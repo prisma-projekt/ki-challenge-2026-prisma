@@ -3,6 +3,8 @@
 **Dein Branch:** `feature/export-system`
 **Deine Dateien:** `src/js/modules/export-system.js` und `src/css/05-components/export-panel.css`
 
+**Besonderheit bei dir:** Anders als die anderen 5 hast du KEINE eigene Karte in `index.html` — es gibt kein `<article id="tool-export">`. Deine Funktionen (Copy-Button, Download, Share-Link) werden später in die ANDEREN 5 Tool-Karten eingebaut (z. B. ein "CSS kopieren"-Button bei der Color Engine, der deine Funktion aufruft). Das übernimmt der Gruppenleiter beim finalen Zusammenführen — du musst heute NICHT in `index.html`. Zum Testen deiner Funktionen reicht ein kleiner, temporärer Test-Button irgendwo auf deiner Seite oder ein Test direkt in der Browser-Konsole (`F12` → Console).
+
 ---
 
 ## 1. Die 4 wichtigsten Regeln (musst du nicht auswendig können, nur verstehen)
@@ -64,7 +66,7 @@ Links im Dateibaum: `src` → `js` → `modules` → **`export-system.js`** öff
 Kopiere **zuerst** diesen Block in deine KI (egal welche):
 
 ```markdown
-Ich arbeite am Projekt PRISMA (KI Challenge 2026) mit dieser Architektur:
+Ich arbeite am Projekt PRISMA für die KI Challenge 2026 der HTL Traun (Klasse 2BHIT) mit dieser Architektur:
 - Build-Tool: Vite 6, Vanilla ES6 Module (import/export), 0 Inline-Scripts im HTML
 - CSS: ITCSS mit @layer (settings, generic, elements, components, utilities, modes)
 - Naming: BEM, ALLE Klassen mit .challenge-* Prefix — keine generischen Klassen wie .card/.button
