@@ -1,6 +1,6 @@
 # PRISMA 🎨
 
-Team-Projekt für die **KI Challenge 2026** (HTL Traun, 2BHIT) — fünf KI-gestützte Kreativ-Tools für Webdesign, gebaut mit Vanilla JS und einer strikten ITCSS/BEM-Architektur.
+Team-Projekt für die **KI Challenge 2026** (HTL Traun) — fünf KI-gestützte Kreativ-Tools für Webdesign, gebaut mit Vanilla JS und einer strikten ITCSS/BEM-Architektur.
 
 ## Die 5 Tools
 
