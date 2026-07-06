@@ -267,8 +267,28 @@
               <p class="tool-card__desc" data-i18n="tool.typeMatcherDesc">Schriftarten-Paarungen mit Begründung</p>
             </div>
             <div class="tool-card__body">
-              <div class="tool-placeholder">
-                <p class="tool-placeholder__text" data-i18n="tool.typeMatcherPlaceholder">Wähle einen Projekttyp → erhalte ein Schriftarten-Pairing mit KI-generierter Begründung</p>
+              <form id="type-form" class="challenge-type-form" role="form" aria-labelledby="type-form-legend">
+                <fieldset class="challenge-type-form__group">
+                  <legend id="type-form-legend" class="u-sr-only" data-i18n="tool.typeMatcher.formLegend">Typografie Matchmaker</legend>
+
+                  <label for="type-usecase" class="u-sr-only" data-i18n="tool.typeMatcher.useCaseLabel">Projekttyp wählen</label>
+                  <select id="type-usecase" class="challenge-type-form__select" aria-label="Projekttyp wählen" data-i18n="tool.typeMatcher.useCaseSelect">
+                    <option value="blog" data-i18n="tool.typeMatcher.useCase.blog">Blog</option>
+                    <option value="portfolio" data-i18n="tool.typeMatcher.useCase.portfolio">Portfolio</option>
+                    <option value="corporate" data-i18n="tool.typeMatcher.useCase.corporate">Corporate</option>
+                    <option value="editorial" data-i18n="tool.typeMatcher.useCase.editorial">Editorial / Magazin</option>
+                    <option value="startup" data-i18n="tool.typeMatcher.useCase.startup">Startup / Tech</option>
+                    <option value="boutique" data-i18n="tool.typeMatcher.useCase.boutique">Boutique / Shop</option>
+                  </select>
+
+                  <div class="challenge-type-form__actions">
+                    <button id="type-generate" class="challenge-btn challenge-btn--primary" type="button" aria-label="Paarungen generieren" data-i18n="tool.typeMatcher.generate">Paarungen anzeigen</button>
+                  </div>
+                </fieldset>
+              </form>
+
+              <div id="type-preview" class="challenge-type-pairing__container" aria-live="polite" aria-atomic="true" data-i18n="typeMatcher.pairing.previewArticle">
+                <!-- Renderziel für type-engine.renderPairings(pairings, '#type-preview') -->
               </div>
             </div>
           </article>
