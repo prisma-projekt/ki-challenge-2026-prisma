@@ -152,6 +152,7 @@ export function renderPalette(palette, containerSelector = '#color-preview') {
   }
 
   container.innerHTML = '';
+  currentPalette = [...palette];
 
   palette.forEach((color) => {
     const swatch = document.createElement('div');
@@ -170,7 +171,10 @@ export function renderPalette(palette, containerSelector = '#color-preview') {
       getContrastRatio(color, '#000000')
     );
 
-    badge.textContent = getWcagBadge(best);
+    const rating = getWcagBadge(best);
+    badge.textContent = rating;
+    const modifier = rating === 'AAA' ? 'aaa' : rating === 'AA' ? 'aa' : 'fail';
+    badge.classList.add(`challenge-color-preview__badge--${modifier}`);
 
     swatch.appendChild(label);
     swatch.appendChild(badge);
@@ -258,11 +262,20 @@ export function extractPaletteFromImage(imageElement, maxColors = 5) {
    Export API
 --------------------------*/
 
+/** Zuletzt gerenderte Palette — für die Export-Engine. */
+let currentPalette = [];
+
+/** Aktuelles Farb-CSS für registerCssSource('colors', ...). */
+export function getCurrentCss() {
+  return currentPalette.length ? generateCssVariables(currentPalette) : '';
+}
+
 export default {
   MOOD_PALETTES,
   generatePalette,
   hslToHex,
   generateCssVariables,
   renderPalette,
+  getCurrentCss,
   extractPaletteFromImage
 };

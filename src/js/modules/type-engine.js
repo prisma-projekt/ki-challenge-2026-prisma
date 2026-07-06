@@ -144,6 +144,20 @@ function normalizeUseCase(useCase) {
     .replace(/(^-|-$)/g, '');
 }
 
+/** Aktuell gewählte Schriftpaarung — für die Export-Engine. */
+let currentPairing = null;
+
+/** Aktuelles Typografie-CSS für registerCssSource('typography', ...). */
+export function getCurrentCss() {
+  if (!currentPairing) return '';
+  return [
+    ':root {',
+    `  --challenge-font-heading: '${currentPairing.heading}';`,
+    `  --challenge-font-body: '${currentPairing.body}';`,
+    '}',
+  ].join('\n');
+}
+
 export function generatePairings(useCase) {
   if (!useCase || typeof useCase !== 'string') {
     return getDefaultPairings();
@@ -293,6 +307,8 @@ function createPairingCard(pairing, index) {
       return;
     }
 
+    currentPairing = pairing;
+
     const allCards = Array.from(cardRoot.parentElement.querySelectorAll('.challenge-type-pairing'));
     allCards.forEach((item) => {
       const button = item.querySelector('.challenge-type-pairing__select');
@@ -339,6 +355,7 @@ function startFontRoulette(pairings, container, rouletteButton) {
 
   const finalize = (finalIndex) => {
     setSelectedPairing(container, finalIndex);
+    currentPairing = pairings[finalIndex] || null;
     rouletteButton.disabled = false;
   };
 

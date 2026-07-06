@@ -1,1 +1,63 @@
-// leeres layout-blueprint.css
+/**
+ * PRISMA — Components Layer
+ * Layout Engine: Wireframe-Preview des generierten Grids.
+ *
+ * Tokens wie im Rest des Projekts: --challenge-primary/-accent/-surface/
+ * -border/-text, --space-*, --radius-*, --shadow-* (+ --shadow-glow),
+ * --font-display/-sans/-mono. Layer-Reihenfolge zentral in tokens.css.
+ */
+
+@layer components {
+  .challenge-layout-preview {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .challenge-layout-preview__wireframe {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile: gestapelt; JS setzt die Desktop-Spalten */
+    gap: var(--space-2);
+    padding: var(--space-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface);
+    transition: box-shadow 0.2s ease;
+  }
+
+  /* ★ Signature: gleicher Glow-Hover wie in allen PRISMA-Modulen */
+  .challenge-layout-preview__wireframe:hover {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .challenge-layout-preview__block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 64px;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--challenge-primary) 14%, transparent);
+    color: var(--challenge-primary);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .challenge-layout-preview__caption {
+    margin: 0;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+  }
+
+  /* Ab Tablet dürfen die Blöcke die vom JS gesetzten Spaltenanteile nutzen */
+  @media (min-width: 768px) {
+    .challenge-layout-preview__wireframe {
+      padding: var(--space-4);
+    }
+
+    .challenge-layout-preview__block {
+      min-height: 96px;
+    }
+  }
+}

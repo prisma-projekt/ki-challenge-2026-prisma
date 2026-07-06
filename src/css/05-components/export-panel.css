@@ -6,14 +6,14 @@
  * falls sie bei euch anders heißen — ich kenne die Datei nicht):
  *
  *   Farbe:      --challenge-primary, --challenge-primary-hover,
- *               --challenge-on-primary, --challenge-surface,
- *               --challenge-border, --challenge-text,
+ *               --text-inverse, --bg-surface,
+ *               --border-color, --text-primary,
  *               --challenge-success, --challenge-error
  *   Abstand:    --space-1 … --space-6
- *   Radius:     --challenge-radius-sm, --challenge-radius-md
- *   Schatten:   --challenge-shadow-md
- *   Typografie: --font-size-sm, --font-size-md, --font-family-base,
- *               --font-family-mono (Fallback: monospace)
+ *   Radius:     --radius-sm, --radius-md
+ *   Schatten:   --shadow-md
+ *   Typografie: --text-sm, --text-base, --font-sans,
+ *               --font-mono (Fallback: monospace)
  *
  * Die Layer-Reihenfolge wird zentral einmal deklariert, z. B. in tokens.css:
  *   @layer settings, generic, elements, components, utilities, modes;
@@ -29,9 +29,9 @@
     flex-direction: column;
     gap: var(--space-4);
     padding: var(--space-4);
-    background-color: var(--challenge-surface);
-    border: 1px solid var(--challenge-border);
-    border-radius: var(--challenge-radius-md);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
   }
 
   .challenge-export-panel__actions {
@@ -52,20 +52,21 @@
     width: 100%;
     padding: var(--space-3) var(--space-4);
     border: 1px solid var(--challenge-primary);
-    border-radius: var(--challenge-radius-sm);
+    border-radius: var(--radius-sm);
     background-color: var(--challenge-primary);
-    color: var(--challenge-on-primary);
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
+    color: var(--text-inverse);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
     line-height: 1.2;
     cursor: pointer;
-    transition: background-color 0.15s ease, transform 0.05s ease;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
   }
 
   .challenge-export-panel__copy-btn:hover,
   .challenge-export-panel__download-btn:hover,
   .challenge-export-panel__share-btn:hover {
-    background-color: var(--challenge-primary-hover, var(--challenge-primary));
+    background-color: var(--challenge-primary-hover, var(--challenge-primary-dark));
+    box-shadow: var(--shadow-glow); /* ★ Signature */
   }
 
   .challenge-export-panel__copy-btn:active,
@@ -94,12 +95,12 @@
     display: block;
     width: 100%;
     padding: var(--space-2) var(--space-3);
-    border: 1px dashed var(--challenge-border);
-    border-radius: var(--challenge-radius-sm);
-    background-color: var(--challenge-surface);
-    color: var(--challenge-text);
-    font-family: var(--font-family-mono, monospace);
-    font-size: var(--font-size-sm);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    font-size: var(--text-sm);
     white-space: nowrap;
     overflow-x: auto;
     cursor: pointer;
@@ -137,10 +138,10 @@
     align-items: center;
     gap: var(--space-2);
     padding: var(--space-3) var(--space-4);
-    border-radius: var(--challenge-radius-md);
-    box-shadow: var(--challenge-shadow-md);
-    background-color: var(--challenge-surface);
-    color: var(--challenge-text);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
     pointer-events: auto;
     animation: challenge-export-toast-lifecycle 3s ease forwards;
   }
@@ -155,7 +156,7 @@
 
   .challenge-export-panel__toast-icon {
     flex-shrink: 0;
-    font-size: var(--font-size-md);
+    font-size: var(--text-base);
   }
 
   .challenge-export-panel__toast--success .challenge-export-panel__toast-icon {
@@ -167,8 +168,8 @@
   }
 
   .challenge-export-panel__toast-message {
-    font-family: var(--font-family-base);
-    font-size: var(--font-size-sm);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
   }
 
   @keyframes challenge-export-toast-lifecycle {
