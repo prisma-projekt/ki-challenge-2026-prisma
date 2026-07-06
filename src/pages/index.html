@@ -244,20 +244,71 @@
       <div class="u-container">
         <h2 id="tools-title" class="u-sr-only">Tools</h2>
 
-        <div class="tools-grid">
-          <!-- Color Generator -->
-          <article class="tool-card" id="tool-color" data-tool="color">
-            <div class="tool-card__header">
-              <i class="ph ph-palette tool-card__icon" aria-hidden="true"></i>
-              <h3 class="tool-card__title" data-i18n="tool.colorGen">Farb-Generator</h3>
-              <p class="tool-card__desc" data-i18n="tool.colorGenDesc">Stimmung → Farbpalette</p>
-            </div>
-            <div class="tool-card__body">
-              <div class="tool-placeholder">
-                <p class="tool-placeholder__text" data-i18n="tool.colorGenPlaceholder">Gib eine Stimmung ein (z. B. "cyberpunk") → erhalte eine 5-Farb-Palette mit CSS-Variablen und Kontrastverhältnissen</p>
-              </div>
-            </div>
-          </article>
+<article class="tool-card" id="tool-color" data-tool="color">
+  <div class="tool-card__header">
+    <i class="ph ph-palette tool-card__icon" aria-hidden="true"></i>
+    <h3 class="tool-card__title" data-i18n="tool.colorGen">Farb-Generator</h3>
+    <p class="tool-card__desc" data-i18n="tool.colorGenDesc">
+      Stimmung → Farbpalette
+    </p>
+  </div>
+
+  <div class="tool-card__body">
+
+    <div class="challenge-color-tool">
+
+      <!-- INPUT -->
+      <label
+        class="challenge-color-tool__label"
+        for="color-mood-input"
+        data-i18n="tool.color.inputLabel"
+      >
+        Stimmung eingeben
+      </label>
+
+      <div class="challenge-color-tool__input-row">
+        <input
+          id="color-mood-input"
+          class="challenge-color-tool__input"
+          type="text"
+          placeholder="z. B. cyberpunk, calm, ocean..."
+          aria-label="Mood Input für Farb-Generator"
+        />
+
+        <button
+          id="color-generate-btn"
+          class="challenge-color-tool__button"
+          type="button"
+          aria-label="Farbpalette generieren"
+        >
+          Generieren
+        </button>
+      </div>
+
+      <!-- RESULT PREVIEW -->
+      <div
+        id="color-preview"
+        class="challenge-color-preview"
+        aria-live="polite"
+        aria-label="Generierte Farbpalette"
+      ></div>
+
+      <!-- CSS OUTPUT -->
+      <div class="challenge-color-tool__css-output">
+        <h4 class="challenge-color-tool__subtitle">
+          CSS Variablen
+        </h4>
+
+        <pre
+          id="color-css-output"
+          class="challenge-color-tool__code"
+        ></pre>
+      </div>
+
+    </div>
+
+  </div>
+</article>
 
           <!-- Typography Matchmaker -->
           <article class="tool-card" id="tool-type" data-tool="type">

@@ -1,0 +1,116 @@
+@layer components {
+  .challenge-color-preview {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .challenge-color-preview {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .challenge-color-preview__swatch {
+    position: relative;
+    min-height: 120px;
+    border-radius: var(--space-2);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--space-3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  .challenge-color-preview__swatch:focus-within,
+  .challenge-color-preview__swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+  }
+
+  .challenge-color-preview__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--challenge-text-inverse, #fff);
+    background: rgba(0, 0, 0, 0.25);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--space-1);
+    backdrop-filter: blur(6px);
+  }
+
+  .challenge-color-preview__badge {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: var(--space-1) var(--space-2);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.85);
+    color: var(--challenge-text, #111);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  /* Badge states (optional enhancement via JS later) */
+  .challenge-color-preview__badge--aaa {
+    background: #1f2937;
+    color: #fff;
+  }
+
+  .challenge-color-preview__badge--aa {
+    background: #374151;
+    color: #fff;
+  }
+
+  .challenge-color-preview__badge--fail {
+    background: #ef4444;
+    color: #fff;
+  }
+
+  /* Optional container wrapper styling */
+  .challenge-color-preview__container {
+    padding: var(--space-4);
+    border-radius: var(--space-3);
+    background: var(--challenge-surface, #ffffff);
+  }
+
+  /* Focus accessibility */
+  .challenge-color-preview__swatch:focus-visible {
+    outline: 2px solid var(--challenge-primary);
+    outline-offset: 2px;
+  }
+}
+
+/* =========================
+   OPTIONAL DARK MODE SUPPORT
+   ========================= */
+
+@layer modes {
+  body[data-mode="dark"] .challenge-color-preview__container {
+    background: var(--challenge-surface-dark, #0f172a);
+  }
+
+  body[data-mode="dark"] .challenge-color-preview__label {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+
+  body[data-mode="dark"] .challenge-color-preview__badge {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* =========================
+   GENERIC SAFETY FALLBACK
+   ========================= */
+
+@layer generic {
+  * {
+    box-sizing: border-box;
+  }
+}
