@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollReveal();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   // TODO: Team implementiert folgende Module (Importe auskommentiert bis implementiert):
   // import { generatePalette, renderPalette } from './modules/color-engine.js';
   // import { generatePairings, renderPairings } from './modules/type-engine.js';
@@ -76,12 +77,24 @@ document.addEventListener('DOMContentLoaded', () => {
   initMoodboard('#moodboard-grid');
   initPromptTool();
 
+=======
+  // === Tool-Module verdrahten ===
+  initColorTool();
+  initTypeTool();
+  initLayoutTool();
+  initMoodboard('#moodboard-grid');
+  initPromptTool();
+
+>>>>>>> 52197acbc44d3e8df102193cf1f9225aea628144
   // Export-Engine: CSS-Quellen registrieren + Copy-Buttons initialisieren
   registerCssSource('colors', () => colorEngine.getCurrentCss());
   registerCssSource('typography', () => (typeGetCss ? typeGetCss() : ''));
   registerCssSource('layout', () => (layoutGetCss ? layoutGetCss() : ''));
   initExportButtons();
+<<<<<<< HEAD
 >>>>>>> main
+=======
+>>>>>>> 52197acbc44d3e8df102193cf1f9225aea628144
 });
 
 
