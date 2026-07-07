@@ -11,6 +11,7 @@
 @import url('05-components/header.css') layer(components);
 @import url('05-components/hero.css') layer(components);
 @import url('05-components/prompt-input.css') layer(components);
+@import url('05-components/prompt-parser-page.css') layer(components);
 @import url('05-components/color-preview.css') layer(components);
 @import url('05-components/type-pairing.css') layer(components);
 @import url('05-components/layout-blueprint.css') layer(components);

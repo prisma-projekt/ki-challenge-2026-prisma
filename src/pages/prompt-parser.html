@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Parser — PRISMA</title>
+  <meta name="description" content="Wohin Mensch-KI-Kooperation führen kann: Der PRISMA Prompt Optimizer macht aus schwachen Prompts präzise Anweisungen.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Preload Hero Background -->
+  <link rel="preload" as="image" href="../assets/images/prompt-parser-hero.jpg" type="image/jpeg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/tutorials/ki-challenge-2026/projects/prisma/src/assets/favicon.svg">
+</head>
+<body>
+  <a href="#main-content" class="u-sr-only skip-link" data-i18n="a11y.skipToContent">Zum Hauptinhalt springen</a>
+
+  <!-- Header -->
+  <header class="site-header" role="banner">
+    <div class="site-header__container u-container">
+      <a href="index.html" class="brand" aria-label="Zurück zur Startseite">
+        <span class="brand__logo">
+          <i class="ph ph-sparkle" aria-hidden="true"></i>
+        </span>
+        <span class="brand__name">KI-Challenge <span class="brand__name--highlight">PRISMA</span></span>
+      </a>
+
+      <nav class="main-nav" aria-label="Hauptnavigation">
+        <a href="index.html" class="nav-link" data-i18n="nav.backToHome">Zurück zur Übersicht</a>
+      </nav>
+
+      <div class="header-actions">
+        <div id="lang-switcher" class="lang-switcher">
+          <button class="lang-switcher__btn" aria-haspopup="listbox" aria-expanded="false" id="lang-current">DE</button>
+          <div class="lang-switcher__options" role="listbox">
+            <button class="lang-switcher__option is-active" data-lang="de" role="option">DE</button>
+            <button class="lang-switcher__option" data-lang="en" role="option">EN</button>
+          </div>
+        </div>
+
+        <div class="challenge-xp" id="header-xp" aria-label="Fortschritt">
+          <div class="challenge-xp__level" id="xp-level">1</div>
+          <div class="challenge-xp__info">
+            <span class="challenge-xp__label">XP</span>
+            <div class="challenge-xp__bar-container">
+              <div class="challenge-xp__bar-fill" id="xp-bar-fill" style="--xp-bar-width: 0%;"></div>
+            </div>
+            <span class="challenge-xp__value" id="xp-value">0 / 100</span>
+          </div>
+        </div>
+
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Dunkelmodus aktivieren">
+          <i class="ph ph-moon" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <!-- Hero -->
+    <section class="challenge-prompt-hero" aria-labelledby="prompt-hero-title">
+      <div class="challenge-prompt-hero__overlay" aria-hidden="true"></div>
+      <div class="challenge-prompt-hero__content u-container">
+        <div class="challenge-prompt-hero__eyebrow" data-i18n="promptParserPage.hero.eyebrow">Prompt Engineering</div>
+        <h1 id="prompt-hero-title" class="challenge-prompt-hero__title">
+          <span data-i18n="promptParserPage.hero.titleHighlight">Vom vagen Prompt</span>
+          <span data-i18n="promptParserPage.hero.titleMain">zum präzisen Prompt</span>
+        </h1>
+        <p class="challenge-prompt-hero__subtitle" data-i18n="promptParserPage.hero.subtitle">
+          Der PRISMA Prompt Optimizer zeigt, wie Mensch und KI zusammenwirken: Du liefertst die Idee, die Regel-Engine liefert Struktur, Kontext und Best Practices für topmodernes Webdesign.
+        </p>
+        <a href="#prompt-tool" class="challenge-prompt-hero__cta" data-i18n="promptParserPage.hero.cta">
+          <span>Jetzt testen</span>
+          <i class="ph ph-arrow-down" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="challenge-prompt-section" aria-labelledby="how-title">
+      <div class="u-container">
+        <h2 id="how-title" class="challenge-prompt-section__title" data-i18n="promptParserPage.how.title">Wie der Prompt Optimizer arbeitet</h2>
+        <p class="challenge-prompt-section__subtitle" data-i18n="promptParserPage.how.subtitle">
+          In drei Schritten verwandelt das Tool deinen Entwurf in eine klare, projektreife Anweisung.
+        </p>
+
+        <div class="challenge-prompt-steps">
+          <article class="challenge-prompt-step">
+            <span class="challenge-prompt-step__number" aria-hidden="true">01</span>
+            <div class="challenge-prompt-step__icon">
+              <i class="ph ph-pencil-simple" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-step__title" data-i18n="promptParserPage.how.step1.title">Prompt eingeben</h3>
+            <p class="challenge-prompt-step__desc" data-i18n="promptParserPage.how.step1.desc">
+              Schreibe deine Idee so, wie sie dir in den Sinn kommt — vage Adjektive, fehlender Kontext und allgemeine Formulierungen sind erlaubt.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-step">
+            <span class="challenge-prompt-step__number" aria-hidden="true">02</span>
+            <div class="challenge-prompt-step__icon">
+              <i class="ph ph-arrows-clockwise" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-step__title" data-i18n="promptParserPage.how.step2.title">Regeln anwenden</h3>
+            <p class="challenge-prompt-step__desc" data-i18n="promptParserPage.how.step2.desc">
+              Die Engine erkennt schwache Muster und ergänzt PRISMA-spezifische Anforderungen: ITCSS/BEM, Mobile-First, ARIA, i18n und Design-Tokens.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-step">
+            <span class="challenge-prompt-step__number" aria-hidden="true">03</span>
+            <div class="challenge-prompt-step__icon">
+              <i class="ph ph-copy" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-step__title" data-i18n="promptParserPage.how.step3.title">Ergebnis kopieren</h3>
+            <p class="challenge-prompt-step__desc" data-i18n="promptParserPage.how.step3.desc">
+              Der optimierte Prompt inklusive Projekt-Kontext kann mit einem Klick kopiert und direkt in deine KI-Anfrage eingefügt werden.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features / Human × AI -->
+    <section class="challenge-prompt-section challenge-prompt-features" aria-labelledby="features-title">
+      <div class="u-container">
+        <h2 id="features-title" class="challenge-prompt-section__title" data-i18n="promptParserPage.features.title">Mensch × KI</h2>
+        <p class="challenge-prompt-section__subtitle" data-i18n="promptParserPage.features.subtitle">
+          Kreativität braucht Rahmen. Der Prompt Parser übersetzt menschliche Intuition in technische Präzision — ohne die Idee zu verwässern.
+        </p>
+
+        <div class="challenge-prompt-feature-grid">
+          <article class="challenge-prompt-feature">
+            <div class="challenge-prompt-feature__icon">
+              <i class="ph ph-brain" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-feature__title" data-i18n="promptParserPage.features.feature1.title">Regelbasiert & offline</h3>
+            <p class="challenge-prompt-feature__desc" data-i18n="promptParserPage.features.feature1.desc">
+              Kein API-Key nötig. Alle Verbesserungen laufen lokal im Browser und funktionieren auch ohne Internet.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-feature">
+            <div class="challenge-prompt-feature__icon">
+              <i class="ph ph-palette" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-feature__title" data-i18n="promptParserPage.features.feature2.title">PRISMA-spezifisch</h3>
+            <p class="challenge-prompt-feature__desc" data-i18n="promptParserPage.features.feature2.desc">
+              Jede Regel ist auf das Projekt zugeschnitten: BEM-Klassen, semantisches HTML, Mobile-First, Dark Mode und Barrierefreiheit.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-feature">
+            <div class="challenge-prompt-feature__icon">
+              <i class="ph ph-lightning" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-feature__title" data-i18n="promptParserPage.features.feature3.title">Sofortiges Feedback</h3>
+            <p class="challenge-prompt-feature__desc" data-i18n="promptParserPage.features.feature3.desc">
+              Vorher/Nachher-Vergleich, transparente Änderungsliste mit Begründung und One-Click-Export für sofortige Weiterverarbeitung.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-feature">
+            <div class="challenge-prompt-feature__icon">
+              <i class="ph ph-translate" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-feature__title" data-i18n="promptParserPage.features.feature4.title">Mehrsprachig</h3>
+            <p class="challenge-prompt-feature__desc" data-i18n="promptParserPage.features.feature4.desc">
+              Alle Texte werden über data-i18n bereitgestellt — Deutsch und Englisch sind jederzeit umschaltbar.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-feature">
+            <div class="challenge-prompt-feature__icon">
+              <i class="ph ph-device-mobile" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-feature__title" data-i18n="promptParserPage.features.feature5.title">Mobile-First</h3>
+            <p class="challenge-prompt-feature__desc" data-i18n="promptParserPage.features.feature5.desc">
+              Das Interface ist von Grund auf für Smartphones entwickelt und skaliert elegant auf große Desktop-Bildschirme.
+            </p>
+          </article>
+
+          <article class="challenge-prompt-feature">
+            <div class="challenge-prompt-feature__icon">
+              <i class="ph ph-sparkle" aria-hidden="true"></i>
+            </div>
+            <h3 class="challenge-prompt-feature__title" data-i18n="promptParserPage.features.feature6.title">Bonus: echte KI</h3>
+            <p class="challenge-prompt-feature__desc" data-i18n="promptParserPage.features.feature6.desc">
+              In der Erweiterung kannst du deinen Prompt gegen eine echte Groq-KI vergleichen — optional, sicher und mit Fallback.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Tool -->
+    <section id="prompt-tool" class="challenge-prompt-tool" aria-labelledby="tool-title">
+      <div class="u-container">
+        <h2 id="tool-title" class="challenge-prompt-section__title" data-i18n="promptParserPage.tool.title">Probiere es aus</h2>
+        <p class="challenge-prompt-section__subtitle" data-i18n="promptParserPage.tool.subtitle">
+          Wähle eine Vorlage oder schreibe einen eigenen Prompt — und sieh, wie Mensch-KI-Kooperation in Echtzeit funktioniert.
+        </p>
+
+        <div class="challenge-prompt-tool__panel">
+          <div class="challenge-prompt-input">
+            <label class="challenge-prompt-input__label" for="prompt-input" data-i18n="promptParser.inputLabel">Dein Prompt</label>
+            <textarea id="prompt-input" class="challenge-prompt-input__field" data-i18n="promptParser.inputPlaceholder" placeholder="Füge einen schwachen Prompt ein, z. B. &quot;Mach mir eine schöne Website&quot;..."></textarea>
+
+            <div class="challenge-prompt-input__templates" id="prompt-templates">
+              <span class="challenge-prompt-input__templates-label" data-i18n="promptParser.templatesLabel">Vorlagen</span>
+            </div>
+
+            <div class="challenge-prompt-input__api-key">
+              <label class="challenge-prompt-input__api-key-label" for="prompt-api-key">
+                <i class="ph ph-key" aria-hidden="true"></i>
+                <span data-i18n="promptParser.apiKeyLabel">Groq API-Key (optional)</span>
+              </label>
+              <input id="prompt-api-key" class="challenge-prompt-input__api-key-input" type="password" autocomplete="off" placeholder="gsk_...">
+              <p class="challenge-prompt-input__api-key-hint" data-i18n="promptParser.apiKeyHint">Für den KI-Vergleich. Der Key wird nur im Browser gespeichert und nie im Quellcode hinterlegt.</p>
+            </div>
+
+            <div class="challenge-prompt-input__actions">
+              <button id="prompt-optimize-btn" class="challenge-prompt-input__btn" type="button" aria-label="Prompt optimieren" data-i18n="promptParser.optimizeBtn">Prompt optimieren</button>
+            </div>
+          </div>
+
+          <div id="prompt-result" class="challenge-prompt-result" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="challenge-prompt-cta" aria-labelledby="cta-title">
+      <div class="u-container">
+        <h2 id="cta-title" class="challenge-prompt-cta__title" data-i18n="promptParserPage.cta.title">Bereit für mehr?</h2>
+        <p class="challenge-prompt-cta__subtitle" data-i18n="promptParserPage.cta.subtitle">
+          Der Prompt Parser ist nur ein Werkzeug. Die eigentliche Magie entsteht, wenn du lernst, KI gezielt zu steuern — und deine Kreativität bewusst einzusetzen.
+        </p>
+        <a href="index.html" class="challenge-prompt-cta__btn" data-i18n="promptParserPage.cta.btn">
+          <span>Alle Tools entdecken</span>
+          <i class="ph ph-arrow-right" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__container">
+      <div class="site-footer__bottom">
+        <div class="site-footer__legal">
+          <span>© PANTAM Learning Universe</span>
+          <span class="site-footer__dot">·</span>
+          <a href="#">MIT License</a>
+          <span class="site-footer__dot">·</span>
+          <a href="#">CC BY-NC-SA 4.0</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAB -->
+  <div class="fab" role="group" aria-label="Schnellaktionen">
+    <button id="classroom-toggle" class="fab__btn" type="button" aria-pressed="false" data-tooltip="Classroom Mode (Shift+C)">
+      <i class="ph ph-presentation" aria-hidden="true"></i>
+    </button>
+    <button id="back-to-top" class="fab__btn" type="button" aria-label="Zum Seitenanfang">
+      <i class="ph ph-arrow-up" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="../js/main.js"></script>
+  <!--
+    Hinweis zum Groq API-Key:
+    Der Key kann entweder über .env.local (VITE_GROQ_API_KEY) oder über das
+    Eingabefeld auf dieser Seite bereitgestellt werden. Für den Produktivbetrieb
+    sollte ein Backend-Proxy verwendet werden, damit der Key nicht im Frontend landet.
+  -->
+</body>
+</html>

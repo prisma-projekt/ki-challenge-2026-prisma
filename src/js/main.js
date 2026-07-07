@@ -8,6 +8,7 @@ import { initTheme } from './modules/theme.js';
 import { ClassroomManager, initBackToTop, initMobileMenu } from './modules/classroom.js';
 import { initMission } from './modules/mission.js';
 import { initXP } from './modules/xp.js';
+import { initPromptParser } from './modules/prompt-parser.js';
 
 import de from '../translations/de.js';
 import en from '../translations/en.js';
@@ -34,6 +35,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize XP system
   initXP();
 
+  // Initialize Prompt Parser
+  initPromptParser({
+    input: '#prompt-input',
+    optimizeBtn: '#prompt-optimize-btn',
+    resultContainer: '#prompt-result',
+    templatesContainer: '#prompt-templates',
+    apiKeyInput: '#prompt-api-key',
+    enableAICompare: true
+  });
+
   // Initialize scroll reveal
   initScrollReveal();
 
@@ -43,11 +54,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // import { generateLayout, renderLayoutPreview } from './modules/layout-engine.js';
   // import { initExportButtons } from './modules/export-system.js';
   // import { initMoodboard } from './modules/moodboard.js';
-  // import { optimizePrompt, initPromptTemplates } from './modules/prompt-parser.js';
 
   // initExportButtons();
   // initMoodboard();
-  // initPromptTemplates();
 
   console.log('[PRISMA] Starter-Template geladen. Bereit für Team-Implementierung.');
 });
