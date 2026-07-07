@@ -1,0 +1,243 @@
+/**
+ * PRISMA — Components Layer
+ * Export Panel: Copy-/Download-/Share-Buttons, Share-Link-Anzeige, Toast-Feedback
+ *
+ * Tokens aus tokens.css (nur die tatsächlich existierenden verwendet):
+ *
+ *   Farbe:      --challenge-primary, --challenge-primary-dark,
+ *               --text-inverse, --bg-surface,
+ *               --border-color, --text-primary,
+ *               --challenge-success, --challenge-error
+ *   Abstand:    --space-1 … --space-6
+ *   Radius:     --radius-sm, --radius-md
+ *   Schatten:   --shadow-md, --shadow-glow (Signature-Hover)
+ *   Typografie: --text-sm, --text-base, --font-sans,
+ *               --font-mono (Fallback: monospace)
+ *
+ * Die Layer-Reihenfolge wird zentral einmal deklariert, z. B. in tokens.css:
+ *   @layer settings, generic, elements, components, utilities, modes;
+ * Diese Datei öffnet hier nur den components-Layer.
+ *
+ * BONUS 1 (Datei-Download) & BONUS 2 (Teilbarer Link) benötigen KEINE neuen
+ * Klassen: .challenge-export-panel__download-btn und
+ * .challenge-export-panel__share-btn laufen bereits über die gemeinsame
+ * Button-Basis unten mit; .challenge-export-panel__share-link war ebenfalls
+ * schon vorbereitet. Ergänzt wurde hier lediglich der Signature-Glow beim
+ * Hover des Share-Links, da export-system.js ihn nun per Klick/Tastatur
+ * bedienbar macht (siehe initShareButton).
+ */
+
+@layer components {
+
+  /* --- Panel-Grundgerüst --- */
+
+  .challenge-export-panel {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+  }
+
+  .challenge-export-panel__actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  /* --- Buttons: Copy / Download / Share (gemeinsame Basis) --- */
+
+  .challenge-export-panel__copy-btn,
+  .challenge-export-panel__download-btn,
+  .challenge-export-panel__share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--challenge-primary);
+    border-radius: var(--radius-sm);
+    background-color: var(--challenge-primary);
+    color: var(--text-inverse);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    line-height: 1.2;
+    cursor: pointer;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+  }
+
+  .challenge-export-panel__copy-btn:hover,
+  .challenge-export-panel__download-btn:hover,
+  .challenge-export-panel__share-btn:hover {
+    background-color: var(--challenge-primary-dark);
+    box-shadow: var(--shadow-glow); /* ★ Signature */
+  }
+
+  .challenge-export-panel__copy-btn:active,
+  .challenge-export-panel__download-btn:active,
+  .challenge-export-panel__share-btn:active {
+    transform: scale(0.98);
+  }
+
+  .challenge-export-panel__copy-btn:focus-visible,
+  .challenge-export-panel__download-btn:focus-visible,
+  .challenge-export-panel__share-btn:focus-visible {
+    outline: 2px solid var(--challenge-primary);
+    outline-offset: 2px;
+  }
+
+  .challenge-export-panel__copy-btn:disabled,
+  .challenge-export-panel__download-btn:disabled,
+  .challenge-export-panel__share-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* --- Share-Link-Anzeige (selbst kopierbar, per Klick & Tastatur) --- */
+
+  .challenge-export-panel__share-link {
+    display: block;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px dashed var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    font-size: var(--text-sm);
+    white-space: nowrap;
+    overflow-x: auto;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .challenge-export-panel__share-link:hover {
+    border-color: var(--challenge-primary);
+    box-shadow: var(--shadow-glow); /* ★ Signature — Link ist per Klick/Tastatur interaktiv */
+  }
+
+  .challenge-export-panel__share-link:focus-visible {
+    outline: 2px solid var(--challenge-primary);
+    outline-offset: 2px;
+  }
+
+  .challenge-export-panel__share-link[hidden] {
+    display: none;
+  }
+
+  /* --- Toast-Region (Live-Feedback) --- */
+
+  .challenge-export-panel__toast-region {
+    position: fixed;
+    left: var(--space-4);
+    right: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    pointer-events: none;
+  }
+
+  .challenge-export-panel__toast {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    pointer-events: auto;
+    animation: challenge-export-toast-lifecycle 3s ease forwards;
+  }
+
+  .challenge-export-panel__toast--success {
+    border-left: 4px solid var(--challenge-success);
+  }
+
+  .challenge-export-panel__toast--error {
+    border-left: 4px solid var(--challenge-error);
+  }
+
+  .challenge-export-panel__toast-icon {
+    flex-shrink: 0;
+    font-size: var(--text-base);
+  }
+
+  .challenge-export-panel__toast--success .challenge-export-panel__toast-icon {
+    color: var(--challenge-success);
+  }
+
+  .challenge-export-panel__toast--error .challenge-export-panel__toast-icon {
+    color: var(--challenge-error);
+  }
+
+  .challenge-export-panel__toast-message {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+  }
+
+  @keyframes challenge-export-toast-lifecycle {
+    0% {
+      opacity: 0;
+      transform: translateY(var(--space-2));
+    }
+    8% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    88% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(var(--space-2));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .challenge-export-panel__toast {
+      animation: none;
+    }
+  }
+
+  /* --- Desktop (ab 768px) --- */
+
+  @media (min-width: 768px) {
+    .challenge-export-panel {
+      padding: var(--space-6);
+    }
+
+    .challenge-export-panel__actions {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .challenge-export-panel__copy-btn,
+    .challenge-export-panel__download-btn,
+    .challenge-export-panel__share-btn {
+      width: auto;
+    }
+
+    .challenge-export-panel__share-link {
+      width: auto;
+      max-width: 32rem;
+    }
+
+    .challenge-export-panel__toast-region {
+      left: auto;
+      right: var(--space-6);
+      bottom: var(--space-6);
+      align-items: flex-end;
+    }
+
+    .challenge-export-panel__toast {
+      max-width: 24rem;
+    }
+  }
+}

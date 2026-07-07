@@ -13,6 +13,14 @@ import { initPromptParser } from './modules/prompt-parser.js';
 import de from '../translations/de.js';
 import en from '../translations/en.js';
 
+// Tool-Module
+import colorEngine, { generatePalette, renderPalette, generateCssVariables } from './modules/color-engine.js';
+import { generatePairings, renderPairings } from './modules/type-engine.js';
+import { generateLayout, renderLayoutPreview } from './modules/layout-engine.js';
+import { initMoodboard } from './modules/moodboard.js';
+import { optimizePrompt, renderResult, initPromptTemplates } from './modules/prompt-parser.js';
+import { initExportButtons, registerCssSource } from './modules/export-system.js';
+
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize i18n
   initI18n(de, en);
@@ -48,6 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize scroll reveal
   initScrollReveal();
 
+<<<<<<< HEAD
   // TODO: Team implementiert folgende Module (Importe auskommentiert bis implementiert):
   // import { generatePalette, renderPalette } from './modules/color-engine.js';
   // import { generatePairings, renderPairings } from './modules/type-engine.js';
@@ -59,8 +68,69 @@ document.addEventListener('DOMContentLoaded', () => {
   // initMoodboard();
 
   console.log('[PRISMA] Starter-Template geladen. Bereit für Team-Implementierung.');
+=======
+  // === Tool-Module verdrahten ===
+  initColorTool();
+  initTypeTool();
+  initLayoutTool();
+  initMoodboard('#moodboard-grid');
+  initPromptTool();
+
+  // Export-Engine: CSS-Quellen registrieren + Copy-Buttons initialisieren
+  registerCssSource('colors', () => colorEngine.getCurrentCss());
+  registerCssSource('typography', () => (typeGetCss ? typeGetCss() : ''));
+  registerCssSource('layout', () => (layoutGetCss ? layoutGetCss() : ''));
+  initExportButtons();
+>>>>>>> main
 });
 
+
+// getCurrentCss aus den Modulen (fuer die Export-Engine)
+import { getCurrentCss as typeGetCss } from './modules/type-engine.js';
+import { getCurrentCss as layoutGetCss } from './modules/layout-engine.js';
+
+function initColorTool() {
+  const input = document.querySelector('#color-mood-input');
+  const btn = document.querySelector('#color-generate-btn');
+  const output = document.querySelector('#color-css-output');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const palette = generatePalette(input ? input.value : '');
+    renderPalette(palette, '#color-preview');
+    if (output) output.textContent = generateCssVariables(palette);
+  });
+}
+
+function initTypeTool() {
+  const select = document.querySelector('#type-usecase');
+  const btn = document.querySelector('#type-generate');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    renderPairings(generatePairings(select ? select.value : 'blog'), '#type-preview');
+  });
+}
+
+function initLayoutTool() {
+  const select = document.querySelector('#layout-usecase');
+  const btn = document.querySelector('#layout-generate');
+  const output = document.querySelector('#layout-css-output');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    const layout = generateLayout(select ? select.value : 'blog');
+    renderLayoutPreview(layout, '#layout-preview');
+    if (output) output.textContent = layout.css;
+  });
+}
+
+function initPromptTool() {
+  initPromptTemplates();
+  const input = document.querySelector('#prompt-input');
+  const btn = document.querySelector('#prompt-optimize');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    renderResult(optimizePrompt(input ? input.value : ''), '#prompt-result');
+  });
+}
 function initScrollReveal() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

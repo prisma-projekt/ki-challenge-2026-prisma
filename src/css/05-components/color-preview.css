@@ -1,0 +1,92 @@
+@layer components {
+  .challenge-color-preview {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .challenge-color-preview {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  .challenge-color-preview__swatch {
+    position: relative;
+    min-height: 120px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: var(--space-3);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+
+  /* ★ Signature: Glow-Hover, konsistent über alle PRISMA-Module */
+  .challenge-color-preview__swatch:focus-within,
+  .challenge-color-preview__swatch:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+
+  .challenge-color-preview__label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.35);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-sm);
+    backdrop-filter: blur(6px);
+  }
+
+  .challenge-color-preview__badge {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--challenge-gray-900);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+  }
+
+  /* WCAG-Badge-Zustände (werden von color-engine.js gesetzt) */
+  .challenge-color-preview__badge--aaa {
+    background: var(--challenge-gray-800);
+    color: #fff;
+  }
+
+  .challenge-color-preview__badge--aa {
+    background: var(--challenge-gray-700);
+    color: #fff;
+  }
+
+  .challenge-color-preview__badge--fail {
+    background: var(--challenge-error);
+    color: #fff;
+  }
+
+  .challenge-color-preview__container {
+    padding: var(--space-4);
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+  }
+
+  .challenge-color-preview__swatch:focus-visible {
+    outline: 2px solid var(--challenge-primary);
+    outline-offset: 2px;
+  }
+}
+
+/*
+ * Dark Mode braucht hier keinen Extra-Block mehr:
+ * --bg-surface & Co. werden in tokens.css unter html.dark-mode automatisch
+ * umgemappt. Der frühere body[data-mode="dark"]-Block war zudem der falsche
+ * Selektor (euer Toggle ist html.dark-mode) und ist deshalb entfernt.
+ * Der globale box-sizing-Reset lebt zentral in 02-generic/reset.css.
+ */

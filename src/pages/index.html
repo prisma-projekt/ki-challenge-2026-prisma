@@ -244,20 +244,71 @@
       <div class="u-container">
         <h2 id="tools-title" class="u-sr-only">Tools</h2>
 
-        <div class="tools-grid">
-          <!-- Color Generator -->
-          <article class="tool-card" id="tool-color" data-tool="color">
-            <div class="tool-card__header">
-              <i class="ph ph-palette tool-card__icon" aria-hidden="true"></i>
-              <h3 class="tool-card__title" data-i18n="tool.colorGen">Farb-Generator</h3>
-              <p class="tool-card__desc" data-i18n="tool.colorGenDesc">Stimmung → Farbpalette</p>
-            </div>
-            <div class="tool-card__body">
-              <div class="tool-placeholder">
-                <p class="tool-placeholder__text" data-i18n="tool.colorGenPlaceholder">Gib eine Stimmung ein (z. B. "cyberpunk") → erhalte eine 5-Farb-Palette mit CSS-Variablen und Kontrastverhältnissen</p>
-              </div>
-            </div>
-          </article>
+<article class="tool-card" id="tool-color" data-tool="color">
+  <div class="tool-card__header">
+    <i class="ph ph-palette tool-card__icon" aria-hidden="true"></i>
+    <h3 class="tool-card__title" data-i18n="tool.colorGen">Farb-Generator</h3>
+    <p class="tool-card__desc" data-i18n="tool.colorGenDesc">
+      Stimmung → Farbpalette
+    </p>
+  </div>
+
+  <div class="tool-card__body">
+
+    <div class="challenge-color-tool">
+
+      <!-- INPUT -->
+      <label
+        class="challenge-color-tool__label"
+        for="color-mood-input"
+        data-i18n="tool.color.inputLabel"
+      >
+        Stimmung eingeben
+      </label>
+
+      <div class="challenge-color-tool__input-row">
+        <input
+          id="color-mood-input"
+          class="challenge-color-tool__input"
+          type="text"
+          placeholder="z. B. cyberpunk, calm, ocean..."
+          aria-label="Mood Input für Farb-Generator"
+        />
+
+        <button
+          id="color-generate-btn"
+          class="challenge-color-tool__button"
+          type="button"
+          aria-label="Farbpalette generieren"
+        >
+          Generieren
+        </button>
+      </div>
+
+      <!-- RESULT PREVIEW -->
+      <div
+        id="color-preview"
+        class="challenge-color-preview"
+        aria-live="polite"
+        aria-label="Generierte Farbpalette"
+      ></div>
+
+      <!-- CSS OUTPUT -->
+      <div class="challenge-color-tool__css-output">
+        <h4 class="challenge-color-tool__subtitle">
+          CSS Variablen
+        </h4>
+
+        <pre
+          id="color-css-output"
+          class="challenge-color-tool__code"
+        ></pre>
+      </div>
+
+    </div>
+
+  </div>
+</article>
 
           <!-- Typography Matchmaker -->
           <article class="tool-card" id="tool-type" data-tool="type">
@@ -267,8 +318,28 @@
               <p class="tool-card__desc" data-i18n="tool.typeMatcherDesc">Schriftarten-Paarungen mit Begründung</p>
             </div>
             <div class="tool-card__body">
-              <div class="tool-placeholder">
-                <p class="tool-placeholder__text" data-i18n="tool.typeMatcherPlaceholder">Wähle einen Projekttyp → erhalte ein Schriftarten-Pairing mit KI-generierter Begründung</p>
+              <form id="type-form" class="challenge-type-form" role="form" aria-labelledby="type-form-legend">
+                <fieldset class="challenge-type-form__group">
+                  <legend id="type-form-legend" class="u-sr-only" data-i18n="tool.typeMatcher.formLegend">Typografie Matchmaker</legend>
+
+                  <label for="type-usecase" class="u-sr-only" data-i18n="tool.typeMatcher.useCaseLabel">Projekttyp wählen</label>
+                  <select id="type-usecase" class="challenge-type-form__select" aria-label="Projekttyp wählen" data-i18n="tool.typeMatcher.useCaseSelect">
+                    <option value="blog" data-i18n="tool.typeMatcher.useCase.blog">Blog</option>
+                    <option value="portfolio" data-i18n="tool.typeMatcher.useCase.portfolio">Portfolio</option>
+                    <option value="corporate" data-i18n="tool.typeMatcher.useCase.corporate">Corporate</option>
+                    <option value="editorial" data-i18n="tool.typeMatcher.useCase.editorial">Editorial / Magazin</option>
+                    <option value="startup" data-i18n="tool.typeMatcher.useCase.startup">Startup / Tech</option>
+                    <option value="boutique" data-i18n="tool.typeMatcher.useCase.boutique">Boutique / Shop</option>
+                  </select>
+
+                  <div class="challenge-type-form__actions">
+                    <button id="type-generate" class="challenge-btn challenge-btn--primary" type="button" aria-label="Paarungen generieren" data-i18n="tool.typeMatcher.generate">Paarungen anzeigen</button>
+                  </div>
+                </fieldset>
+              </form>
+
+              <div id="type-preview" class="challenge-type-pairing__container" aria-live="polite" aria-atomic="true" data-i18n="typeMatcher.pairing.previewArticle">
+                <!-- Renderziel für type-engine.renderPairings(pairings, '#type-preview') -->
               </div>
             </div>
           </article>
@@ -281,8 +352,20 @@
               <p class="tool-card__desc" data-i18n="tool.layoutGenDesc">Use Case → responsives Grid</p>
             </div>
             <div class="tool-card__body">
-              <div class="tool-placeholder">
-                <p class="tool-placeholder__text" data-i18n="tool.layoutGenPlaceholder">Beschreibe deinen Use Case → erhalte responsiven CSS-Grid-Code</p>
+              <div class="challenge-layout-blueprint">
+                <div class="challenge-layout-blueprint__controls">
+                  <label for="layout-usecase" class="u-sr-only">Use Case wählen</label>
+                  <select id="layout-usecase" class="challenge-type-form__select" aria-label="Use Case wählen">
+                    <option value="blog">Blog</option>
+                    <option value="gallery">Gallery</option>
+                    <option value="dashboard">Dashboard</option>
+                    <option value="landing">Landing</option>
+                    <option value="magazine">Magazine</option>
+                  </select>
+                  <button id="layout-generate" class="challenge-btn challenge-btn--primary" type="button" aria-label="Layout generieren">Grid generieren</button>
+                </div>
+                <div id="layout-preview" class="challenge-layout-preview" aria-live="polite"></div>
+                <pre id="layout-css-output" class="challenge-layout-blueprint__code" aria-label="Generierter CSS-Code"></pre>
               </div>
             </div>
           </article>
@@ -295,6 +378,7 @@
               <p class="tool-card__desc" data-i18n="tool.promptOptDesc">Schlechter Prompt → besserer Prompt</p>
             </div>
             <div class="tool-card__body">
+<<<<<<< HEAD
               <div class="challenge-prompt-input">
                 <label class="challenge-prompt-input__label" for="prompt-input" data-i18n="promptParser.inputLabel">Dein Prompt</label>
                 <textarea id="prompt-input" class="challenge-prompt-input__field" data-i18n="promptParser.inputPlaceholder" placeholder="Füge einen schwachen Prompt ein, z. B. &quot;Mach mir eine schöne Website&quot;..."></textarea>
@@ -314,6 +398,14 @@
                 <div class="challenge-prompt-input__actions">
                   <button id="prompt-optimize-btn" class="challenge-prompt-input__btn" type="button" aria-label="Prompt optimieren" data-i18n="promptParser.optimizeBtn">Prompt optimieren</button>
                 </div>
+=======
+              <div class="challenge-prompt">
+                <label for="prompt-input" class="u-sr-only">Prompt eingeben</label>
+                <textarea id="prompt-input" class="challenge-prompt__input" rows="4" placeholder="z. B. mach eine gute moderne website mit buttons"></textarea>
+                <div class="challenge-prompt__templates" aria-label="Prompt-Vorlagen"></div>
+                <button id="prompt-optimize" class="challenge-btn challenge-btn--primary" type="button" aria-label="Prompt verbessern">Prompt verbessern</button>
+                <div id="prompt-result" class="challenge-prompt__result" aria-live="polite"></div>
+>>>>>>> main
               </div>
 
               <div id="prompt-result" class="challenge-prompt-result" aria-live="polite"></div>
@@ -328,8 +420,19 @@
               <p class="tool-card__desc" data-i18n="tool.moodboardDesc">Dein persönliches Moodboard</p>
             </div>
             <div class="tool-card__body">
-              <div class="tool-placeholder">
-                <p class="tool-placeholder__text" data-i18n="tool.moodboardPlaceholder">Speichere, organisiere und exportiere deine Design-Inspirationen — wie Pinterest für Entwickler</p>
+              <div class="challenge-moodboard">
+                <div class="challenge-moodboard__add">
+                  <label for="moodboard-type" class="u-sr-only">Element-Typ</label>
+                  <select id="moodboard-type" data-moodboard-type aria-label="Element-Typ">
+                    <option value="color">Farbe</option>
+                    <option value="text">Text</option>
+                    <option value="image">Bild-URL</option>
+                  </select>
+                  <label for="moodboard-content" class="u-sr-only">Inhalt</label>
+                  <input id="moodboard-content" data-moodboard-content type="text" placeholder="#4F46E5 · Text · Bild-URL" aria-label="Inhalt">
+                  <button data-moodboard-submit class="challenge-btn challenge-btn--primary" type="button" aria-label="Element hinzufügen">Hinzufügen</button>
+                </div>
+                <div id="moodboard-grid" class="challenge-moodboard__grid"></div>
               </div>
             </div>
           </article>

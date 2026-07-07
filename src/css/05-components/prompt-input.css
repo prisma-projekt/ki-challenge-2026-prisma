@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @layer components {
   /* ============================================================
      Prompt Parser — Input & Result Panel
@@ -257,11 +258,138 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+=======
+/**
+ * PRISMA — Components Layer
+ * Prompt Parser: Eingabe, Vorher/Nachher, Änderungsliste, Vorlagen-Buttons.
+ * Tokens & Layer-Konvention wie im restlichen Projekt.
+ */
+
+@layer components {
+  .challenge-prompt {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .challenge-prompt__input {
+    width: 100%;
+    min-height: 6rem;
+    padding: var(--space-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
+  }
+
+  .challenge-prompt__input:focus-visible {
+    outline: 2px solid var(--challenge-primary);
+    outline-offset: 2px;
+  }
+
+  /* Vorlagen-Buttons */
+  .challenge-prompt__templates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .challenge-prompt__template {
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    background: var(--bg-surface);
+    color: var(--challenge-primary);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+
+  /* ★ Signature: Glow-Hover, konsistent über alle Module */
+  .challenge-prompt__template:hover,
+  .challenge-prompt__template:focus-visible {
+    border-color: var(--challenge-primary);
+    box-shadow: var(--shadow-glow);
+    outline: none;
+  }
+
+  /* Vorher / Nachher */
+  .challenge-prompt__block {
+    padding: var(--space-4);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-surface);
+  }
+
+  .challenge-prompt__block--before {
+    border-left: 4px solid var(--border-color);
+  }
+
+  .challenge-prompt__block--after {
+    border-left: 4px solid var(--challenge-primary);
+  }
+
+  .challenge-prompt__label {
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-display, var(--font-sans));
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-primary);
+  }
+
+  .challenge-prompt__original {
+    margin: 0;
+    color: var(--text-secondary, var(--text-primary));
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9rem;
+    opacity: 0.7;
+    text-decoration: line-through;
+  }
+
+  .challenge-prompt__improved {
+    margin: 0 0 var(--space-3);
+    color: var(--text-primary);
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .challenge-prompt__copy {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid var(--challenge-primary);
+    border-radius: var(--radius-sm);
+    background: var(--challenge-primary);
+    color: var(--text-inverse, #fff);
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease;
+  }
+
+  .challenge-prompt__copy:hover,
+  .challenge-prompt__copy:focus-visible {
+    box-shadow: var(--shadow-glow);
+    outline: none;
+  }
+
+  /* Änderungsliste */
+  .challenge-prompt__changes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+>>>>>>> main
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
+<<<<<<< HEAD
   .challenge-prompt-result__change {
     display: flex;
     flex-direction: column;
@@ -480,5 +608,32 @@
     .challenge-prompt-input__field {
       min-height: 160px;
     }
+=======
+  .challenge-prompt__change {
+    padding: var(--space-3);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--challenge-accent) 8%, transparent);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .challenge-prompt__why {
+    color: var(--text-secondary, var(--text-primary));
+  }
+
+  @media (min-width: 768px) {
+    .challenge-prompt {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .challenge-prompt__input,
+    .challenge-prompt__templates,
+    .challenge-prompt__changes {
+      grid-column: 1 / -1;
+    }
+>>>>>>> main
   }
 }

@@ -201,5 +201,13 @@ export default {
 
   // Footer
   'footer.credits': 'PRISMA — AI Challenge Team B',
-  'footer.evolutionLink': 'Evolution Showcase'
+  'footer.evolutionLink': 'Evolution Showcase',
+  // PRISMA — Tool-Keys
+  'typeMatcher.pairing.previewHeading': 'The quick brown fox jumps over the lazy dog',
+  'typeMatcher.pairing.previewBody': 'A clean sample sentence shows how readable the body text is.',
+  'typeMatcher.pairing.previewArticle': 'A short article preview shows how heading and body fonts work together.',
+  'promptParser.before': 'Before',
+  'promptParser.after': 'After',
+  'promptParser.copy': 'Copy',
+  'export.feedback.downloaded': 'File downloaded!',
 };
