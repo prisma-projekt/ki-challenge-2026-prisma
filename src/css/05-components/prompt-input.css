@@ -1,3 +1,267 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+@layer components {
+  /* ============================================================
+     Prompt Parser — Input & Result Panel
+     ============================================================ */
+
+  .challenge-prompt-input {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
+  }
+
+  .challenge-prompt-input__label {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  .challenge-prompt-input__field {
+    width: 100%;
+    min-height: 120px;
+    padding: var(--space-4);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-lg);
+    resize: vertical;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .challenge-prompt-input__field::placeholder {
+    color: var(--text-muted);
+  }
+
+  .challenge-prompt-input__field:hover {
+    border-color: var(--challenge-primary-light);
+  }
+
+  .challenge-prompt-input__field:focus {
+    outline: none;
+    border-color: var(--challenge-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  }
+
+  /* Templates */
+  .challenge-prompt-input__templates {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .challenge-prompt-input__templates-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    width: 100%;
+    margin-bottom: var(--space-1);
+  }
+
+  .challenge-prompt-input__template-btn {
+    padding: var(--space-2) var(--space-3);
+    font-family: var(--font-sans);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .challenge-prompt-input__template-btn:hover,
+  .challenge-prompt-input__template-btn:focus {
+    color: var(--text-inverse);
+    background: var(--challenge-primary);
+    border-color: var(--challenge-primary);
+    outline: none;
+  }
+
+  .challenge-prompt-input__template-btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  }
+
+  /* API Key Input */
+  .challenge-prompt-input__api-key {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    background: var(--bg-code);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+  }
+
+  .challenge-prompt-input__api-key-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .challenge-prompt-input__api-key-input {
+    width: 100%;
+    padding: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color-strong);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .challenge-prompt-input__api-key-input:focus {
+    outline: none;
+    border-color: var(--challenge-primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  }
+
+  .challenge-prompt-input__api-key-hint {
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    line-height: var(--leading-normal);
+    margin: 0;
+  }
+
+  .challenge-prompt-input__api-key--compact {
+    padding: var(--space-3);
+    gap: var(--space-1);
+  }
+
+  .challenge-prompt-input__api-key--compact .challenge-prompt-input__api-key-label {
+    font-size: var(--text-xs);
+  }
+
+  .challenge-prompt-input__api-key--compact .challenge-prompt-input__api-key-input {
+    padding: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  /* Actions */
+  .challenge-prompt-input__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .challenge-prompt-input__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-6);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-inverse);
+    background: linear-gradient(135deg, var(--challenge-primary) 0%, var(--challenge-primary-dark) 100%);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .challenge-prompt-input__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .challenge-prompt-input__btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25), var(--shadow-glow);
+  }
+
+  /* ============================================================
+     Result Panel
+     ============================================================ */
+
+  .challenge-prompt-result {
+    margin-top: var(--space-6);
+  }
+
+  .challenge-prompt-result__empty {
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--challenge-error);
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--radius-lg);
+  }
+
+  .challenge-prompt-result__content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    padding: var(--space-5);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+  }
+
+  .challenge-prompt-result__section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .challenge-prompt-result__heading {
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .challenge-prompt-result__text {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .challenge-prompt-result__text--muted {
+    color: var(--text-muted);
+    text-decoration: line-through;
+    opacity: 0.75;
+  }
+
+  .challenge-prompt-result__text--improved {
+    padding: var(--space-4);
+    color: var(--text-primary);
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
+    border-left: 3px solid var(--challenge-primary);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  }
+
+  /* Changes List */
+  .challenge-prompt-result__changes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+=======
+=======
+>>>>>>> 52197acbc44d3e8df102193cf1f9225aea628144
 /**
  * PRISMA — Components Layer
  * Prompt Parser: Eingabe, Vorher/Nachher, Änderungsliste, Vorlagen-Buttons.
@@ -122,11 +386,238 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
+<<<<<<< HEAD
+>>>>>>> main
+=======
+>>>>>>> 52197acbc44d3e8df102193cf1f9225aea628144
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+  .challenge-prompt-result__change {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3);
+    background: var(--bg-code);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+  }
+
+  .challenge-prompt-result__change-before {
+    color: var(--challenge-error);
+    font-weight: 500;
+  }
+
+  .challenge-prompt-result__change-arrow {
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+  }
+
+  .challenge-prompt-result__change-after {
+    color: var(--challenge-success);
+    font-weight: 600;
+  }
+
+  .challenge-prompt-result__change-why {
+    color: var(--text-secondary);
+    font-size: var(--text-xs);
+    line-height: var(--leading-normal);
+    margin-top: var(--space-1);
+  }
+
+  /* Actions */
+  .challenge-prompt-result__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border-color);
+  }
+
+  .challenge-prompt-result__copy-btn,
+  .challenge-prompt-result__compare-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .challenge-prompt-result__copy-btn {
+    background: linear-gradient(135deg, var(--challenge-accent) 0%, var(--challenge-accent-dark) 100%);
+  }
+
+  .challenge-prompt-result__copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow-accent);
+  }
+
+  .challenge-prompt-result__copy-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.25), var(--shadow-glow-accent);
+  }
+
+  .challenge-prompt-result__copy-btn.is-copied {
+    background: linear-gradient(135deg, var(--challenge-success) 0%, #059669 100%);
+  }
+
+  .challenge-prompt-result__compare-btn {
+    background: linear-gradient(135deg, var(--challenge-primary) 0%, var(--challenge-primary-dark) 100%);
+  }
+
+  .challenge-prompt-result__compare-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .challenge-prompt-result__compare-btn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25), var(--shadow-glow);
+  }
+
+  /* AI Error Message */
+  .challenge-prompt-result__ai-error {
+    margin-top: var(--space-4);
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--challenge-error);
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: var(--radius-lg);
+  }
+
+  /* ============================================================
+     Comparison Layout (Bonus)
+     ============================================================ */
+
+  .challenge-prompt-result__content--comparison {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  .challenge-prompt-result__column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-xl);
+  }
+
+  .challenge-prompt-result__column--rules {
+    border-top: 3px solid var(--challenge-primary);
+  }
+
+  .challenge-prompt-result__column--ai {
+    border-top: 3px solid var(--challenge-accent);
+  }
+
+  .challenge-prompt-result__column-title {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin: 0 0 var(--space-2);
+  }
+
+  .challenge-prompt-result__cached-badge {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--challenge-success);
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: var(--radius-full);
+    margin-top: var(--space-2);
+  }
+
+  /* ============================================================
+     Desktop: Two-column result layout
+     ============================================================ */
+
+  @media (min-width: 768px) {
+    .challenge-prompt-result__content:not(.challenge-prompt-result__content--comparison) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+    }
+
+    .challenge-prompt-result__content--comparison {
+      flex-direction: row;
+    }
+
+    .challenge-prompt-result__column {
+      flex: 1 1 50%;
+    }
+
+    .challenge-prompt-result__section--original,
+    .challenge-prompt-result__section--improved {
+      grid-column: span 1;
+    }
+
+    .challenge-prompt-result__section--changes,
+    .challenge-prompt-result__actions {
+      grid-column: 1 / -1;
+    }
+
+    .challenge-prompt-input__field {
+      min-height: 140px;
+      font-size: var(--text-lg);
+    }
+
+    .challenge-prompt-input__templates-label {
+      width: auto;
+      margin-bottom: 0;
+      margin-right: var(--space-2);
+    }
+
+    .challenge-prompt-input__templates {
+      gap: var(--space-3);
+    }
+
+    .challenge-prompt-result__change {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .challenge-prompt-result__change-why {
+      width: 100%;
+      margin-top: var(--space-1);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .challenge-prompt-result__content {
+      gap: var(--space-8);
+      padding: var(--space-8);
+    }
+
+    .challenge-prompt-input__field {
+      min-height: 160px;
+    }
+=======
+=======
+>>>>>>> 52197acbc44d3e8df102193cf1f9225aea628144
   .challenge-prompt__change {
     padding: var(--space-3);
     border-radius: var(--radius-sm);
@@ -152,5 +643,9 @@
     .challenge-prompt__changes {
       grid-column: 1 / -1;
     }
+<<<<<<< HEAD
+>>>>>>> main
+=======
+>>>>>>> 52197acbc44d3e8df102193cf1f9225aea628144
   }
 }
