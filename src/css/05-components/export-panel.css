@@ -2,22 +2,29 @@
  * PRISMA — Components Layer
  * Export Panel: Copy-/Download-/Share-Buttons, Share-Link-Anzeige, Toast-Feedback
  *
- * ANNAHMEN zu euren Tokens aus tokens.css (bitte Namen prüfen/anpassen,
- * falls sie bei euch anders heißen — ich kenne die Datei nicht):
+ * Tokens aus tokens.css (nur die tatsächlich existierenden verwendet):
  *
- *   Farbe:      --challenge-primary, --challenge-primary-hover,
+ *   Farbe:      --challenge-primary, --challenge-primary-dark,
  *               --text-inverse, --bg-surface,
  *               --border-color, --text-primary,
  *               --challenge-success, --challenge-error
  *   Abstand:    --space-1 … --space-6
  *   Radius:     --radius-sm, --radius-md
- *   Schatten:   --shadow-md
+ *   Schatten:   --shadow-md, --shadow-glow (Signature-Hover)
  *   Typografie: --text-sm, --text-base, --font-sans,
  *               --font-mono (Fallback: monospace)
  *
  * Die Layer-Reihenfolge wird zentral einmal deklariert, z. B. in tokens.css:
  *   @layer settings, generic, elements, components, utilities, modes;
  * Diese Datei öffnet hier nur den components-Layer.
+ *
+ * BONUS 1 (Datei-Download) & BONUS 2 (Teilbarer Link) benötigen KEINE neuen
+ * Klassen: .challenge-export-panel__download-btn und
+ * .challenge-export-panel__share-btn laufen bereits über die gemeinsame
+ * Button-Basis unten mit; .challenge-export-panel__share-link war ebenfalls
+ * schon vorbereitet. Ergänzt wurde hier lediglich der Signature-Glow beim
+ * Hover des Share-Links, da export-system.js ihn nun per Klick/Tastatur
+ * bedienbar macht (siehe initShareButton).
  */
 
 @layer components {
@@ -65,7 +72,7 @@
   .challenge-export-panel__copy-btn:hover,
   .challenge-export-panel__download-btn:hover,
   .challenge-export-panel__share-btn:hover {
-    background-color: var(--challenge-primary-hover, var(--challenge-primary-dark));
+    background-color: var(--challenge-primary-dark);
     box-shadow: var(--shadow-glow); /* ★ Signature */
   }
 
@@ -89,7 +96,7 @@
     cursor: not-allowed;
   }
 
-  /* --- Share-Link-Anzeige (selbst kopierbar) --- */
+  /* --- Share-Link-Anzeige (selbst kopierbar, per Klick & Tastatur) --- */
 
   .challenge-export-panel__share-link {
     display: block;
@@ -104,10 +111,12 @@
     white-space: nowrap;
     overflow-x: auto;
     cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .challenge-export-panel__share-link:hover {
     border-color: var(--challenge-primary);
+    box-shadow: var(--shadow-glow); /* ★ Signature — Link ist per Klick/Tastatur interaktiv */
   }
 
   .challenge-export-panel__share-link:focus-visible {
